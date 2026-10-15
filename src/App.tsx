@@ -162,6 +162,24 @@ function App() {
               color={COLORS.yellow}
             />
             <FeatureCard
+              icon="🎉"
+              title="Holiday Detection"
+              description="Special celebration embeds on Colombian holidays — July 20, Christmas, Día de las Velitas, and more!"
+              color={COLORS.red}
+            />
+            <FeatureCard
+              icon="💬"
+              title="Emoji Variations"
+              description="24+ unique emoji combinations keep every message fresh and visually diverse."
+              color={COLORS.blue}
+            />
+            <FeatureCard
+              icon="🇨🇴"
+              title="Auto Reactions"
+              description="Bot reacts with 3-5 random Colombian emojis (🇨🇴 ☕ 🌺 🎉) after every message!"
+              color={COLORS.yellow}
+            />
+            <FeatureCard
               icon="⏰"
               title="Natural Timing"
               description="Messages appear at organic, unpredictable intervals (25-40 min gaps) — never spammy."
@@ -176,7 +194,7 @@ function App() {
             <FeatureCard
               icon="📊"
               title="Built-in Commands"
-              description="Ping, stats, and help commands with beautiful embeds to check bot health."
+              description="Ping, stats, holidays, and help commands with beautiful embeds to check bot health."
               color={COLORS.yellow}
             />
             <FeatureCard
@@ -200,7 +218,7 @@ function App() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">👀 Live Preview</h2>
-            <p className="text-gray-400 text-lg">See what the bot looks like in Discord</p>
+            <p className="text-gray-400 text-lg">See what the bot looks like in Discord — with reactions!</p>
           </div>
 
           <div className="bg-[#2b2d31] rounded-2xl p-6 shadow-2xl border border-white/5">
@@ -216,11 +234,83 @@ function App() {
               </div>
             </div>
 
-            {/* Messages */}
+            {/* Messages with reactions */}
             <div className="space-y-6">
-              <DiscordEmbed message="¡Viva Colombia!" color={COLORS.yellow} index={0} />
-              <DiscordEmbed message="We export more than just coffee." color={COLORS.blue} index={1} />
-              <DiscordEmbed message="Yellow. Blue. Red." color={COLORS.red} index={2} />
+              <DiscordEmbed message="🇨🇴 ¡Viva Colombia! 🇨🇴" color={COLORS.yellow} index={0} reactions={["🇨🇴", "💛", "☕", "✨"]} />
+              <DiscordEmbed message="☕ We export more than just coffee. 🌎" color={COLORS.blue} index={1} reactions={["💙", "☕", "🌺", "🌟"]} />
+              <DiscordEmbed message="💛💙❤️ Yellow. Blue. Red. 🇨🇴" color={COLORS.red} index={2} reactions={["❤️", "🇨🇴", "🎉", "🏔️"]} />
+            </div>
+          </div>
+
+          {/* Holiday Preview */}
+          <div className="mt-8">
+            <h3 className="text-xl font-bold mb-4 text-center">🎉 Holiday Special Edition</h3>
+            <div className="bg-[#2b2d31] rounded-2xl p-6 shadow-2xl border border-white/5">
+              <div className="flex items-center gap-3 pb-4 mb-6 border-b border-white/10">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-xl"
+                  style={{ background: `linear-gradient(135deg, ${COLORS.yellow}, ${COLORS.red})` }}>
+                  🇨🇴
+                </div>
+                <div>
+                  <div className="font-semibold text-white">Colombia Pride Bot</div>
+                  <div className="text-xs text-yellow-400">🎉 Holiday Mode Active</div>
+                </div>
+              </div>
+              <DiscordEmbed
+                message="🇨🇴🎆 ¡200+ años de libertad! ¡Viva Colombia! 🎆🇨🇴"
+                color={COLORS.yellow}
+                index={0}
+                isHoliday={true}
+                reactions={["🇨🇴", "💛", "💙", "❤️", "🎉", "✨"]}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Holidays & Reactions Section */}
+      <section className="py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Holidays */}
+            <div className="bg-white/[0.02] rounded-2xl border border-white/5 p-8">
+              <h3 className="text-2xl font-bold mb-6">🎉 Holiday Detection</h3>
+              <p className="text-gray-400 mb-6 text-sm">
+                The bot automatically detects Colombian holidays and sends special celebration embeds with extra reactions!
+              </p>
+              <div className="space-y-2 text-sm">
+                <HolidayItem date="Jan 1" name="New Year's Day" emoji="🎆" />
+                <HolidayItem date="May 1" name="Labor Day" emoji="💪" />
+                <HolidayItem date="Jul 20" name="Independence Day" emoji="🇨🇴" />
+                <HolidayItem date="Aug 7" name="Battle of Boyacá" emoji="⚔️" />
+                <HolidayItem date="Oct 12" name="Día de la Raza" emoji="🌎" />
+                <HolidayItem date="Nov 11" name="Cartagena Independence" emoji="🏰" />
+                <HolidayItem date="Dec 7" name="Día de las Velitas" emoji="🕯️" />
+                <HolidayItem date="Dec 8" name="Inmaculada Concepción" emoji="⭐" />
+                <HolidayItem date="Dec 25" name="Christmas" emoji="🎄" />
+              </div>
+            </div>
+
+            {/* Reactions */}
+            <div className="bg-white/[0.02] rounded-2xl border border-white/5 p-8">
+              <h3 className="text-2xl font-bold mb-6">🎯 Auto Reactions</h3>
+              <p className="text-gray-400 mb-6 text-sm">
+                Every message gets 3-5 random emoji reactions for extra Colombian flair!
+              </p>
+              <div className="grid grid-cols-4 gap-3 mb-6">
+                {["🇨🇴", "💛", "💙", "❤️", "☕", "🌺", "🎉", "✨", "🌟", "🏔️", "🦜", "🌊"].map((emoji) => (
+                  <div
+                    key={emoji}
+                    className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-2xl hover:scale-110 transition-transform cursor-default"
+                  >
+                    {emoji}
+                  </div>
+                ))}
+              </div>
+              <div className="text-sm text-gray-500">
+                <p>• <strong className="text-white">Normal:</strong> 3-5 random reactions</p>
+                <p>• <strong className="text-white">Holiday:</strong> 5-7 reactions + 🇨🇴 guaranteed</p>
+              </div>
             </div>
           </div>
         </div>
@@ -340,8 +430,12 @@ pip install -r requirements.txt`}
                     <td className="px-6 py-4 font-mono text-sm" style={{ color: COLORS.blue }}>!stats</td>
                     <td className="px-6 py-4 text-sm text-gray-400">View bot statistics (messages, cycles, servers)</td>
                   </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="px-6 py-4 font-mono text-sm" style={{ color: COLORS.red }}>!holidays</td>
+                    <td className="px-6 py-4 text-sm text-gray-400">See Colombian holidays the bot celebrates</td>
+                  </tr>
                   <tr>
-                    <td className="px-6 py-4 font-mono text-sm" style={{ color: COLORS.red }}>!help</td>
+                    <td className="px-6 py-4 font-mono text-sm" style={{ color: COLORS.yellow }}>!help</td>
                     <td className="px-6 py-4 text-sm text-gray-400">Show available commands</td>
                   </tr>
                 </tbody>
@@ -416,13 +510,16 @@ function FeatureCard({ icon, title, description, color }: {
   );
 }
 
-function DiscordEmbed({ message, color, index }: {
+function DiscordEmbed({ message, color, index, reactions, isHoliday }: {
   message: string;
   color: string;
   index: number;
+  reactions?: string[];
+  isHoliday?: boolean;
 }) {
   const authors = ['☀️ Golden Spirit', '🌊 Deep Blue Ocean', '🌹 Passionate Red'];
   const footers = ['🇨🇴 República de Colombia', '🇨🇴 Orgullo Colombiano', '🇨🇴 Tierra de mil colores'];
+  const holidayFooters = ['🇨🇴 ¡Celebrando con orgullo!', '🎉🇨🇴 ¡Que viva la fiesta!'];
 
   return (
     <div className="bg-[#2b2d31] rounded-lg p-4 border-l-4 max-w-sm" style={{ borderLeftColor: color }}>
@@ -432,15 +529,48 @@ function DiscordEmbed({ message, color, index }: {
           🇨🇴
         </div>
         <span className="text-sm font-semibold text-white">Colombia Pride Bot</span>
+        {isHoliday && (
+          <span className="text-xs px-2 py-0.5 rounded-full bg-yellow-500/20 text-yellow-400 font-medium">
+            🎉 Holiday
+          </span>
+        )}
         <span className="text-xs text-gray-500 ml-auto">Today at 12:00 PM</span>
       </div>
       <div className="ml-8">
         <div className="text-xs font-semibold mb-1" style={{ color }}>{authors[index]}</div>
         <div className="bg-[#1e1f22] rounded-lg p-3 border-l-2" style={{ borderLeftColor: color }}>
           <p className="text-white text-sm font-medium">{message}</p>
+          {isHoliday && (
+            <p className="text-xs text-gray-400 mt-1 italic">*Special Holiday Edition*</p>
+          )}
         </div>
-        <div className="text-xs text-gray-500 mt-2">{footers[index]}</div>
+        <div className="text-xs text-gray-500 mt-2">
+          {isHoliday ? holidayFooters[index % holidayFooters.length] : footers[index]}
+        </div>
+        {/* Reactions */}
+        {reactions && reactions.length > 0 && (
+          <div className="flex flex-wrap gap-1 mt-2">
+            {reactions.map((emoji, i) => (
+              <span
+                key={i}
+                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#2b2d31] border border-white/10 text-xs hover:bg-white/5 transition-colors cursor-default"
+              >
+                {emoji} <span className="text-gray-400">1</span>
+              </span>
+            ))}
+          </div>
+        )}
       </div>
+    </div>
+  );
+}
+
+function HolidayItem({ date, name, emoji }: { date: string; name: string; emoji: string }) {
+  return (
+    <div className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-white/5 transition-colors">
+      <span className="text-lg">{emoji}</span>
+      <span className="text-gray-300 flex-1">{name}</span>
+      <span className="text-gray-500 text-xs font-mono">{date}</span>
     </div>
   );
 }
@@ -473,7 +603,7 @@ function SetupStep({ number, title, code }: {
 
 const BOT_CODE = `"""
 🇨🇴 Colombia Pride Bot
-A beautiful Discord bot that celebrates Colombia with style.
+Holiday Detection | Emoji Variations | Auto Reactions
 """
 
 import os, sys, random, asyncio, logging
@@ -481,13 +611,6 @@ from datetime import datetime
 import discord
 from discord.ext import commands
 from config import *
-
-# Logging Setup
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-)
-logger = logging.getLogger("colombia_bot")
 
 # Bot Setup
 intents = discord.Intents.default()
@@ -499,10 +622,15 @@ bot = commands.Bot(
     description="🇨🇴 Celebrating Colombia with pride",
 )
 
-def create_pride_embed(message: str) -> discord.Embed:
+def get_random_emoji_message(base_message: str) -> str:
+    """Returns a random emoji variation of a base message."""
+    variations = EMOJI_VARIATIONS.get(base_message, [base_message])
+    return random.choice(variations)
+
+def create_pride_embed(message: str, is_holiday=False) -> discord.Embed:
     """Creates a beautiful embed with Colombian flag colors."""
     color = random.choice(EMBED_COLORS)
-    footer = random.choice(FOOTERS)
+    footer = random.choice(HOLIDAY_FOOTERS if is_holiday else FOOTERS)
     
     embed = discord.Embed(
         description=message,
@@ -511,119 +639,137 @@ def create_pride_embed(message: str) -> discord.Embed:
     )
     embed.set_footer(text=footer)
     
-    if color == discord.Color.from_hex("#FCD116"):
-        embed.set_author(name="☀️ Golden Spirit")
-    elif color == discord.Color.from_hex("#003893"):
-        embed.set_author(name="🌊 Deep Blue Ocean")
-    else:
-        embed.set_author(name="🌹 Passionate Red")
+    if is_holiday:
+        embed.set_thumbnail(url="flag_url_here")
+        embed.add_field(name="🎉", value="*Special Holiday Edition*")
     
     return embed
 
+async def add_reactions(message, is_holiday=False):
+    """Adds emoji reactions — more on holidays!"""
+    num = random.randint(
+        MIN_REACTIONS + (1 if is_holiday else 0),
+        MAX_REACTIONS + (2 if is_holiday else 0)
+    )
+    reactions = ["🇨🇴"] if is_holiday else []
+    available = [e for e in REACTION_EMOJIS if e not in reactions]
+    reactions.extend(random.sample(available, num - len(reactions)))
+    
+    for emoji in reactions:
+        await message.add_reaction(emoji)
+        await asyncio.sleep(random.uniform(0.5, 1.5))
+
 async def send_cycle_messages():
-    """Main cycle loop with natural timing."""
+    """Main cycle loop with holiday detection."""
     channel = bot.get_channel(CHANNEL_ID)
-    if not channel:
-        channel = await bot.fetch_channel(CHANNEL_ID)
+    holiday_message = get_holiday_message()
+    is_holiday_today = holiday_message is not None
     
-    messages_this_cycle = random.randint(7, 12)
+    if is_holiday_today:
+        logger.info("🎉 HOLIDAY DETECTED!")
     
-    for i in range(messages_this_cycle):
-        message = random.choice(MESSAGES)
-        embed = create_pride_embed(message)
-        await channel.send(embed=embed)
+    for i in range(random.randint(7, 12)):
+        use_holiday = is_holiday_today and i == 0
         
-        if i < messages_this_cycle - 1:
-            delay = random.uniform(25, 40) * 60
-            jitter = random.uniform(-2, 2) * 60
-            await asyncio.sleep(delay + jitter)
-    
-    await asyncio.sleep(30)
-    await send_cycle_messages()
+        if use_holiday:
+            message = holiday_message
+        else:
+            base = random.choice(BASE_MESSAGES)
+            message = get_random_emoji_message(base)
+        
+        embed = create_pride_embed(message, is_holiday=use_holiday)
+        sent = await channel.send(embed=embed)
+        
+        # Auto-react with Colombian emojis!
+        await add_reactions(sent, is_holiday=use_holiday)
+        
+        await asyncio.sleep(random.uniform(25, 40) * 60)
 
-@bot.event
-async def on_ready():
-    logger.info(f"🇨🇴 {bot.user.name} is online!")
-    await bot.change_presence(
-        activity=discord.Activity(
-            type=discord.ActivityType.watching,
-            name="over Colombia 🇨🇴",
-        )
-    )
-    bot.loop.create_task(send_cycle_messages())
-
-@bot.command(name="ping")
-async def ping(ctx):
-    latency = round(bot.latency * 1000)
-    embed = discord.Embed(
-        title="🇨🇴 Colombia Pride Bot",
-        description="¡Estoy vivo y orgulloso!",
-        color=random.choice(EMBED_COLORS),
-    )
-    embed.add_field(name="⚡ Latency", value=f"{latency}ms")
-    embed.set_footer(text="🇨🇴 República de Colombia")
+@bot.command(name="holidays")
+async def holidays(ctx):
+    """Show Colombian holidays the bot celebrates."""
+    # ... displays holiday calendar
     await ctx.send(embed=embed)
 
 bot.run(BOT_TOKEN)`;
 
 const CONFIG_CODE = `"""
 🇨🇴 Colombia Pride Bot - Configuration
-All configurable settings in one clean place.
+Holidays | Emoji Variations | Reactions
 """
 
-import os
-import discord
+import os, discord
 from dotenv import load_dotenv
+from datetime import date
 
 load_dotenv()
-
-# ─── Discord Configuration ───────────────────────
 
 BOT_TOKEN = os.getenv("DISCORD_BOT_TOKEN", "")
 CHANNEL_ID = int(os.getenv("DISCORD_CHANNEL_ID", "0"))
 
 # ─── Colombian Flag Colors ───────────────────────
-# Official colors (Ley 12 de 1967)
-
 EMBED_COLORS = [
     discord.Color.from_hex("#FCD116"),  # Yellow
     discord.Color.from_hex("#003893"),  # Blue
     discord.Color.from_hex("#CE1126"),  # Red
 ]
 
-# ─── Messages ────────────────────────────────────
+# ─── Emoji Variations (24+ combos!) ──────────────
+EMOJI_VARIATIONS = {
+    "¡Viva Colombia!": [
+        "🇨🇴 ¡Viva Colombia! 🇨🇴",
+        "💛💙❤️ ¡Viva Colombia! 💛💙❤️",
+        "🦜 ¡Viva Colombia! 🌺",
+        # ... 8 variations total
+    ],
+    "We export more than just coffee.": [
+        "☕ We export more than just coffee. 🌎",
+        "🌱 We export more than just coffee. 💚",
+        # ... 8 variations total
+    ],
+    "Yellow. Blue. Red.": [
+        "💛 Yellow. 💙 Blue. ❤️ Red.",
+        "☀️ Yellow. 🌊 Blue. 🌹 Red.",
+        # ... 8 variations total
+    ],
+}
 
-MESSAGES = [
-    "¡Viva Colombia!",
-    "We export more than just coffee.",
-    "Yellow. Blue. Red.",
+# ─── Holiday Messages ────────────────────────────
+HOLIDAY_MESSAGES = {
+    "independence_day": [
+        "🇨🇴🎆 ¡200+ años de libertad!",
+        "🎉 ¡Feliz Día de la Independencia!",
+    ],
+    "christmas": [
+        "🎄🇨🇴 ¡Feliz Navidad desde Colombia!",
+    ],
+    # ... 10+ holidays supported
+}
+
+# ─── Reaction Emojis ─────────────────────────────
+REACTION_EMOJIS = [
+    "🇨🇴", "💛", "💙", "❤️", "☕",
+    "🌺", "🎉", "✨", "🌟", "🏔️",
+    "🦜", "🌊",
 ]
+MIN_REACTIONS = 3
+MAX_REACTIONS = 5
 
-# ─── Timing ──────────────────────────────────────
+# ─── Holidays Calendar ───────────────────────────
+COLOMBIAN_HOLIDAYS = {
+    (1, 1): "new_year",
+    (5, 1): "labor_day",
+    (7, 20): "independence_day",
+    (8, 7): "battle_of_boyaca",
+    (12, 7): "candelaria",
+    (12, 25): "christmas",
+    # ... 15 holidays total
+}
 
-CYCLE_DURATION_HOURS = 5
-MIN_GAP_MINUTES = 25
-MAX_GAP_MINUTES = 40
-
-# ─── Footers ─────────────────────────────────────
-
-FOOTERS = [
-    "🇨🇴 República de Colombia",
-    "🇨🇴 Orgullo Colombiano",
-    "🇨🇴 Hecho con amor en Colombia",
-    "🇨🇴 Tierra de mil colores",
-    "🇨🇴 El riesgo es que te quieras quedar",
-]
-
-def validate_config() -> bool:
-    """Validate required configuration."""
-    if not BOT_TOKEN:
-        print("❌ DISCORD_BOT_TOKEN is not set")
-        return False
-    if not CHANNEL_ID:
-        print("❌ DISCORD_CHANNEL_ID is not set")
-        return False
-    return True`;
+def get_todays_holiday():
+    """Check if today is a Colombian holiday."""
+    today = date.today()
+    return COLOMBIAN_HOLIDAYS.get((today.month, today.day))`;
 
 const ENV_CODE = `# 🇨🇴 Colombia Pride Bot - Environment Configuration
 # Copy this file to .env and fill in your values
