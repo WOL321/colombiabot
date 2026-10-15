@@ -94,9 +94,9 @@ def create_pride_embed(message: str, is_holiday: bool = False) -> discord.Embed:
     embed.set_footer(text=footer)
 
     # Add decorative author based on color
-    if color == discord.Color.from_hex("#FCD116"):
+    if color == discord.Color(0xFCD116):
         embed.set_author(name="☀️ Golden Spirit")
-    elif color == discord.Color.from_hex("#003893"):
+    elif color == discord.Color(0x003893):
         embed.set_author(name="🌊 Deep Blue Ocean")
     else:
         embed.set_author(name="🌹 Passionate Red")
@@ -333,7 +333,7 @@ async def on_command_error(ctx, error):
     await ctx.send(
         embed=discord.Embed(
             description="❌ Something went wrong. Please try again.",
-            color=discord.Color.from_hex("#CE1126"),
+            color=discord.Color(0xCE1126),
         )
     )
 
@@ -380,7 +380,7 @@ async def stats(ctx):
     """Show bot statistics."""
     embed = discord.Embed(
         title="📊 Bot Statistics",
-        color=discord.Color.from_hex("#FCD116"),
+        color=discord.Color(0xFCD116),
         timestamp=datetime.utcnow(),
     )
     embed.add_field(
@@ -433,7 +433,7 @@ async def help_cmd(ctx):
     embed = discord.Embed(
         title="🇨🇴 Colombia Pride Bot - Commands",
         description="Celebrating Colombia with elegance, emojis, and pride!",
-        color=discord.Color.from_hex("#003893"),
+        color=discord.Color(0x003893),
         timestamp=datetime.utcnow(),
     )
     embed.add_field(
@@ -496,7 +496,7 @@ async def holidays(ctx):
             "celebration embeds with extra reactions!\n\n"
             f"{holiday_list}"
         ),
-        color=discord.Color.from_hex("#CE1126"),
+        color=discord.Color(0xCE1126),
         timestamp=datetime.utcnow(),
     )
 

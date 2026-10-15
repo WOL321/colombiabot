@@ -53,9 +53,9 @@ def create_pride_embed(message: str, is_holiday: bool = False) -> discord.Embed:
     )
     embed.set_footer(text=footer)
 
-    if color == discord.Color.from_hex("#FCD116"):
+    if color == discord.Color(0xFCD116):
         embed.set_author(name="☀️ Golden Spirit")
-    elif color == discord.Color.from_hex("#003893"):
+    elif color == discord.Color(0x003893):
         embed.set_author(name="🌊 Deep Blue Ocean")
     else:
         embed.set_author(name="🌹 Passionate Red")

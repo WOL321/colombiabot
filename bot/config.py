@@ -18,11 +18,12 @@ CHANNEL_ID: int = int(os.getenv("DISCORD_CHANNEL_ID", "0"))
 
 # ─── Colombian Flag Colors ───────────────────────────────────────────────────
 # Official colors of the Colombian flag (Ley 12 de 1967)
+# Using integer constructor for cross-version compatibility
 
 EMBED_COLORS: list[discord.Color] = [
-    discord.Color.from_hex("#FCD116"),  # Yellow - Sovereignty & Justice
-    discord.Color.from_hex("#003893"),  # Blue - Loyalty & Perseverance
-    discord.Color.from_hex("#CE1126"),  # Red - Valor & Blood of Heroes
+    discord.Color(0xFCD116),  # Yellow - Sovereignty & Justice
+    discord.Color(0x003893),  # Blue - Loyalty & Perseverance
+    discord.Color(0xCE1126),  # Red - Valor & Blood of Heroes
 ]
 
 # ─── Base Messages ───────────────────────────────────────────────────────────
@@ -85,7 +86,7 @@ HOLIDAY_MESSAGES: dict[str, list[str]] = {
         "🏔️ From the Andes to the Caribbean — ¡Viva la Independencia! 🌊",
     ],
     "battle_of_boyaca": [
-        "⚔️🇨🇴 ¡7 de Agosto! The battle that sealed our freedom! 🇨🇦",
+        "⚔️🇨🇴 ¡7 de Agosto! The battle that sealed our freedom! 🇨🇴",
         "🏆 Boyacá — Where heroes were born. ¡Viva Colombia! ⚔️",
     ],
     "day_of_love_friendship": [
@@ -123,17 +124,17 @@ HOLIDAY_MESSAGES: dict[str, list[str]] = {
 
 COLOMBIAN_HOLIDAYS: dict[tuple[int, int], str] = {
     (1, 1): "new_year",
-    (1, 6): "epiphany",  # Simplified - actual date varies
+    (1, 6): "epiphany",
     (3, 19): "saint_joseph",
     (5, 1): "labor_day",
     (6, 29): "saints_peter_paul",
     (7, 20): "independence_day",
     (8, 7): "battle_of_boyaca",
-    (9, 20): "spring_day",  # Approximate
+    (9, 20): "spring_day",
     (10, 12): "race_day",
     (11, 1): "all_saints",
     (11, 11): "cartagena_independence",
-    (12, 7): "candelaria",  # Día de las Velitas (night of Dec 7)
+    (12, 7): "candelaria",
     (12, 8): "immaculate_conception",
     (12, 25): "christmas",
     (12, 31): "new_year_eve",
