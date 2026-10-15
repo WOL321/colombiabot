@@ -2,6 +2,13 @@
 🇨🇴 Colombia Pride Bot
 A beautiful Discord bot that celebrates Colombia with style.
 Posts elegant embeds with Colombian pride messages at natural intervals.
+
+Features:
+  🎨 Premium embeds with Colombian flag colors
+  🇨🇴 Holiday detection with special messages
+  💬 Emoji variations for fresh content
+  🎉 Auto emoji reactions on every message
+  🔄 Rolling 5-hour cycles with organic timing
 """
 
 import os
@@ -12,17 +19,24 @@ import logging
 from datetime import datetime, timedelta
 
 import discord
-from discord.ext import commands, tasks
+from discord.ext import commands
 
 from config import (
     BOT_TOKEN,
     CHANNEL_ID,
-    MESSAGES,
+    BASE_MESSAGES,
+    EMOJI_VARIATIONS,
+    HOLIDAY_MESSAGES,
+    REACTION_EMOJIS,
+    MIN_REACTIONS,
+    MAX_REACTIONS,
     EMBED_COLORS,
     CYCLE_DURATION_HOURS,
     MIN_GAP_MINUTES,
     MAX_GAP_MINUTES,
     FOOTERS,
+    HOLIDAY_FOOTERS,
+    get_todays_holiday,
 )
 
 # ─── Logging Setup ───────────────────────────────────────────────────────────
@@ -48,13 +62,28 @@ bot = commands.Bot(
 
 # ─── Embed Builder ───────────────────────────────────────────────────────────
 
-def create_pride_embed(message: str) -> discord.Embed:
+def get_random_emoji_message(base_message: str) -> str:
+    """
+    Returns a random emoji variation of a base message.
+    Keeps content fresh and visually diverse.
+    """
+    variations = EMOJI_VARIATIONS.get(base_message, [base_message])
+    return random.choice(variations)
+
+
+def create_pride_embed(message: str, is_holiday: bool = False) -> discord.Embed:
     """
     Creates a beautiful, premium embed with Colombian flag colors.
     Randomly selects color and footer for variety.
+    Special holiday styling when is_holiday=True.
     """
     color = random.choice(EMBED_COLORS)
-    footer = random.choice(FOOTERS)
+
+    # Choose footer based on whether it's a holiday
+    if is_holiday:
+        footer = random.choice(HOLIDAY_FOOTERS)
+    else:
+        footer = random.choice(FOOTERS)
 
     embed = discord.Embed(
         description=message,
@@ -64,7 +93,7 @@ def create_pride_embed(message: str) -> discord.Embed:
 
     embed.set_footer(text=footer)
 
-    # Add subtle decorative elements based on color
+    # Add decorative author based on color
     if color == discord.Color.from_hex("#FCD116"):
         embed.set_author(name="☀️ Golden Spirit")
     elif color == discord.Color.from_hex("#003893"):
@@ -72,7 +101,65 @@ def create_pride_embed(message: str) -> discord.Embed:
     else:
         embed.set_author(name="🌹 Passionate Red")
 
+    # Holiday special styling
+    if is_holiday:
+        embed.set_thumbnail(url="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Colombia.svg/1200px-Flag_of_Colombia.svg.png")
+        embed.add_field(
+            name="🎉",
+            value="*Special Holiday Edition*",
+            inline=False,
+        )
+
     return embed
+
+
+def get_holiday_message() -> str | None:
+    """
+    Check if today is a Colombian holiday and return a special message.
+    Returns None if it's not a holiday.
+    """
+    holiday_key = get_todays_holiday()
+
+    if holiday_key and holiday_key in HOLIDAY_MESSAGES:
+        messages = HOLIDAY_MESSAGES[holiday_key]
+        return random.choice(messages)
+
+    return None
+
+
+# ─── Reaction Handler ────────────────────────────────────────────────────────
+
+async def add_reactions(message: discord.Message, is_holiday: bool = False):
+    """
+    Adds emoji reactions to a sent message.
+    More reactions on holidays for extra celebration!
+    """
+    # Choose how many reactions to add
+    if is_holiday:
+        num_reactions = random.randint(MIN_REACTIONS + 1, MAX_REACTIONS + 2)
+    else:
+        num_reactions = random.randint(MIN_REACTIONS, MAX_REACTIONS)
+
+    # Always include the flag on holidays
+    reactions = []
+    if is_holiday:
+        reactions.append("🇨🇴")
+
+    # Pick random unique reactions
+    available = [e for e in REACTION_EMOJIS if e not in reactions]
+    reactions.extend(random.sample(available, min(num_reactions - len(reactions), len(available))))
+
+    # Add reactions with small delays for a natural feel
+    for emoji in reactions:
+        try:
+            await message.add_reaction(emoji)
+            await asyncio.sleep(random.uniform(0.5, 1.5))
+        except discord.HTTPException:
+            # Skip if emoji fails (e.g., custom emoji not available)
+            continue
+        except discord.Forbidden:
+            logger.warning("Missing permission to add reactions")
+            break
 
 
 # ─── Core Messaging Loop ─────────────────────────────────────────────────────
@@ -86,7 +173,9 @@ class ColombiaCycle:
     def __init__(self):
         self.cycle_count = 0
         self.messages_sent = 0
+        self.holiday_messages_sent = 0
         self.is_running = False
+        self.last_holiday_check = None
 
     def get_next_delay(self) -> float:
         """
@@ -101,7 +190,7 @@ class ColombiaCycle:
 
         return delay_minutes * 60
 
-    def get_messages_for_cycle(self) -> list:
+    def get_messages_for_cycle(self) -> int:
         """
         Determines how many messages to send in this cycle.
         With 25-40 min gaps over 5 hours, we get ~7-12 messages.
@@ -139,21 +228,46 @@ async def send_cycle_messages():
         f"({messages_this_cycle} messages planned)"
     )
 
+    # Check for holidays at the start of each cycle
+    holiday_message = get_holiday_message()
+    is_holiday_today = holiday_message is not None
+
+    if is_holiday_today:
+        logger.info(f"🎉 HOLIDAY DETECTED! Special messages enabled today!")
+
     for i in range(messages_this_cycle):
         if not cycle_manager.is_running:
             break
 
-        # Select a random message
-        message = random.choice(MESSAGES)
-        embed = create_pride_embed(message)
+        # Determine if this message should be a holiday message
+        # Send a holiday message on the first post if it's a holiday
+        use_holiday = is_holiday_today and i == 0
+
+        if use_holiday:
+            message = holiday_message
+            logger.info(f"  🎊 Sending HOLIDAY special message!")
+        else:
+            # Pick a random base message and apply emoji variation
+            base_message = random.choice(BASE_MESSAGES)
+            message = get_random_emoji_message(base_message)
+
+        embed = create_pride_embed(message, is_holiday=use_holiday)
 
         try:
-            await channel.send(embed=embed)
+            sent_message = await channel.send(embed=embed)
             cycle_manager.messages_sent += 1
+
+            if use_holiday:
+                cycle_manager.holiday_messages_sent += 1
+
             logger.info(
                 f"  ✨ Sent message {i + 1}/{messages_this_cycle}: "
-                f'"{message}"'
+                f'"{message[:40]}..."'
             )
+
+            # Add emoji reactions (the fun part!)
+            await add_reactions(sent_message, is_holiday=use_holiday)
+
         except discord.HTTPException as e:
             logger.error(f"  ❌ Failed to send message: {e}")
         except discord.Forbidden:
@@ -191,6 +305,11 @@ async def on_ready():
     logger.info(f"   Servers: {len(bot.guilds)}")
     logger.info(f"   Target Channel: {CHANNEL_ID}")
 
+    # Check if today is a holiday
+    holiday = get_todays_holiday()
+    if holiday:
+        logger.info(f"   🎉 Today is a Colombian holiday: {holiday}!")
+
     # Set a cute status
     await bot.change_presence(
         activity=discord.Activity(
@@ -225,9 +344,14 @@ async def on_command_error(ctx, error):
 async def ping(ctx):
     """Check if the bot is online and responsive."""
     latency = round(bot.latency * 1000)
+
+    # Check if today is a holiday
+    holiday = get_todays_holiday()
+    holiday_text = f"\n🎉 **Holiday Today:** `{holiday}`" if holiday else ""
+
     embed = discord.Embed(
         title="🇨🇴 Colombia Pride Bot",
-        description="¡Estoy vivo y orgulloso!",
+        description=f"¡Estoy vivo y orgulloso!{holiday_text}",
         color=random.choice(EMBED_COLORS),
         timestamp=datetime.utcnow(),
     )
@@ -242,6 +366,11 @@ async def ping(ctx):
         value=f"#{cycle_manager.cycle_count}",
         inline=True,
     )
+    embed.add_field(
+        name="🎊 Holiday Posts",
+        value=str(cycle_manager.holiday_messages_sent),
+        inline=True,
+    )
     embed.set_footer(text="🇨🇴 República de Colombia")
     await ctx.send(embed=embed)
 
@@ -249,28 +378,53 @@ async def ping(ctx):
 @bot.command(name="stats")
 async def stats(ctx):
     """Show bot statistics."""
-    uptime_embed = discord.Embed(
+    embed = discord.Embed(
         title="📊 Bot Statistics",
         color=discord.Color.from_hex("#FCD116"),
         timestamp=datetime.utcnow(),
     )
-    uptime_embed.add_field(
+    embed.add_field(
         name="🇨🇴 Total Messages",
         value=str(cycle_manager.messages_sent),
         inline=True,
     )
-    uptime_embed.add_field(
+    embed.add_field(
         name="🔄 Cycles Completed",
         value=str(cycle_manager.cycle_count),
         inline=True,
     )
-    uptime_embed.add_field(
+    embed.add_field(
+        name="🎊 Holiday Specials",
+        value=str(cycle_manager.holiday_messages_sent),
+        inline=True,
+    )
+    embed.add_field(
         name="📡 Servers",
         value=str(len(bot.guilds)),
         inline=True,
     )
-    uptime_embed.set_footer(text="🇨🇴 República de Colombia")
-    await ctx.send(embed=uptime_embed)
+    embed.add_field(
+        name="💬 Emoji Variations",
+        value=str(sum(len(v) for v in EMOJI_VARIATIONS.values())),
+        inline=True,
+    )
+    embed.add_field(
+        name="🎉 Reaction Pool",
+        value=str(len(REACTION_EMOJIS)),
+        inline=True,
+    )
+
+    # Holiday info
+    holiday = get_todays_holiday()
+    if holiday:
+        embed.add_field(
+            name="🎉 Today's Holiday",
+            value=f"`{holiday}`",
+            inline=False,
+        )
+
+    embed.set_footer(text="🇨🇴 República de Colombia")
+    await ctx.send(embed=embed)
 
 
 @bot.command(name="help")
@@ -278,7 +432,7 @@ async def help_cmd(ctx):
     """Show available commands."""
     embed = discord.Embed(
         title="🇨🇴 Colombia Pride Bot - Commands",
-        description="Celebrating Colombia with elegance and pride!",
+        description="Celebrating Colombia with elegance, emojis, and pride!",
         color=discord.Color.from_hex("#003893"),
         timestamp=datetime.utcnow(),
     )
@@ -289,7 +443,12 @@ async def help_cmd(ctx):
     )
     embed.add_field(
         name="`!stats`",
-        value="View bot statistics",
+        value="View bot statistics and holiday info",
+        inline=False,
+    )
+    embed.add_field(
+        name="`!holidays`",
+        value="See upcoming Colombian holidays",
         inline=False,
     )
     embed.add_field(
@@ -297,6 +456,65 @@ async def help_cmd(ctx):
         value="Show this help message",
         inline=False,
     )
+
+    embed.add_field(
+        name="✨ Features",
+        value=(
+            "• Premium embeds with flag colors\n"
+            "• Holiday detection & special messages\n"
+            "• Emoji variations for fresh content\n"
+            "• Auto emoji reactions on every post\n"
+            "• Natural 25-40 min intervals"
+        ),
+        inline=False,
+    )
+    embed.set_footer(text="🇨🇴 República de Colombia")
+    await ctx.send(embed=embed)
+
+
+@bot.command(name="holidays", aliases=["festivos", "calendar"])
+async def holidays(ctx):
+    """Show Colombian holidays the bot celebrates."""
+    holiday_names = {
+        "new_year": "🎆 New Year's Day (Jan 1)",
+        "labor_day": "💪 Labor Day (May 1)",
+        "independence_day": "🇨🇴 Independence Day (Jul 20)",
+        "battle_of_boyaca": "⚔️ Battle of Boyacá (Aug 7)",
+        "race_day": "🌎 Día de la Raza (Oct 12)",
+        "cartagena_independence": "🏰 Cartagena Independence (Nov 11)",
+        "candelaria": "🕯️ Día de las Velitas (Dec 7)",
+        "immaculate_conception": "⭐ Inmaculada Concepción (Dec 8)",
+        "christmas": "🎄 Christmas (Dec 25)",
+    }
+
+    holiday_list = "\n".join(f"• {name}" for name in holiday_names.values())
+
+    embed = discord.Embed(
+        title="🇨🇴 Colombian Holidays Calendar",
+        description=(
+            "The bot detects these holidays and sends special "
+            "celebration embeds with extra reactions!\n\n"
+            f"{holiday_list}"
+        ),
+        color=discord.Color.from_hex("#CE1126"),
+        timestamp=datetime.utcnow(),
+    )
+
+    # Check if today is a holiday
+    today_holiday = get_todays_holiday()
+    if today_holiday and today_holiday in holiday_names:
+        embed.add_field(
+            name="🎉 TODAY!",
+            value=f"**{holiday_names[today_holiday]}**",
+            inline=False,
+        )
+    else:
+        embed.add_field(
+            name="📅 Today",
+            value="No holiday today — regular messages!",
+            inline=False,
+        )
+
     embed.set_footer(text="🇨🇴 República de Colombia")
     await ctx.send(embed=embed)
 
@@ -307,6 +525,7 @@ def main():
     """Start the bot with proper error handling."""
     try:
         logger.info("🚀 Starting Colombia Pride Bot...")
+        logger.info("   Features: Holiday Detection | Emoji Variations | Auto Reactions")
         bot.run(BOT_TOKEN)
     except KeyboardInterrupt:
         logger.info("👋 Bot shutting down gracefully...")
