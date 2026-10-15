@@ -2,7 +2,7 @@ name: Colombia Pride Bot
 
 on:
   schedule:
-    # Runs every 20 minutes (bot will randomly decide whether to send)
+    # Runs every 20 minutes
     - cron: '*/20 * * * *'
   workflow_dispatch: # Allows manual trigger
 
@@ -24,9 +24,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r bot/requirements.txt
     
-    - name: Run bot
+    - name: Run bot (stays online for ~15 minutes)
       env:
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
       run: python bot/bot_github.py
-      timeout-minutes: 2
+      timeout-minutes: 18
