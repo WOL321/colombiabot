@@ -132,17 +132,28 @@ You should see:
 
 ## 🌩️ Cloud Deployment (No Local Setup)
 
-### Discloud (Recommended for beginners)
-1. Go to [discloud.app](https://discloud.app)
-2. Sign up and upload a ZIP of the bot folder
-3. Set env variables in their dashboard
-4. Deploy — done!
+### ⭐ GitHub Actions (RECOMMENDED — 100% FREE, No Credit Card!)
+The easiest and completely free way to run your bot 24/7:
 
-### Railway
-1. Push to GitHub
-2. Deploy from repo on [railway.app](https://railway.app)
-3. Add env variables
-4. Set start command: `python bot.py`
+1. Create a GitHub repository and push all bot files
+2. Go to **Settings** → **Secrets and variables** → **Actions**
+3. Add two secrets:
+   - `DISCORD_BOT_TOKEN` = your bot token
+   - `DISCORD_CHANNEL_ID` = your channel ID
+4. The bot runs automatically every 20 minutes!
+
+**Why GitHub Actions?**
+- ✅ 100% free (2000 minutes/month)
+- ✅ No credit card required
+- ✅ No complex setup
+- ✅ Runs 24/7 automatically
+
+📖 **Full guide:** See [GITHUB_ACTIONS_GUIDE.md](GITHUB_ACTIONS_GUIDE.md)
+
+### Other Options (May require credit card)
+- **Discloud** — [discloud.app](https://discloud.app) (upload ZIP)
+- **Railway** — [railway.app](https://railway.app) ($5 free credit)
+- **Render** — [render.com](https://render.com) ($7/month for workers)
 
 ## 📋 Commands
 

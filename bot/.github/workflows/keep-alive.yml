@@ -1,0 +1,32 @@
+name: Colombia Pride Bot
+
+on:
+  schedule:
+    # Runs every 20 minutes (bot will randomly decide whether to send)
+    - cron: '*/20 * * * *'
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Run bot
+      env:
+        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
+      run: python bot_github.py
+      timeout-minutes: 2
