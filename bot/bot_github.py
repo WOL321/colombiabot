@@ -45,6 +45,7 @@ bot = commands.Bot(
     command_prefix="!",
     intents=intents,
     description="🇨🇴 Celebrating Colombia with pride and elegance",
+    help_command=None,  # Disable built-in help to allow custom help command
 )
 
 # Track stats
