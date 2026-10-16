@@ -29,5 +29,6 @@ jobs:
       env:
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
+        DISCORD_POLL_CHANNEL_ID: ${{ secrets.DISCORD_POLL_CHANNEL_ID }}
       run: python bot/bot_github.py
       timeout-minutes: 5
