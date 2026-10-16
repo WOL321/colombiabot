@@ -408,6 +408,106 @@ async def message_cmd(ctx):
     await ctx.send(embed=embed)
 
 
+@bot.command(name="squad", aliases=["players", "team", "seleccion"])
+async def squad(ctx):
+    """Show Colombia's 2026 World Cup squad."""
+    squad_data = {
+        "Goalkeepers": [
+            "Camilo Vargas (Atlas)",
+            "David Ospina (Atletico Nacional)",
+            "Álvaro Montero (Velez Sarsfield)",
+        ],
+        "Defenders": [
+            "Johan Mojica (RCD Mallorca)",
+            "Devier Machado (Nantes)",
+            "Daniel Muñoz (Crystal Palace)",
+            "Santiago Arias (Bahia)",
+            "Yerry Mina (Cagliari)",
+            "Davinson Sánchez (Galatasaray)",
+            "Jhon Lucumí (Bologna)",
+            "Willer Ditta (Cruz Azul)",
+        ],
+        "Midfielders": [
+            "James Rodríguez ⭐ (Minnesota United)",
+            "Jefferson Lerma (Crystal Palace)",
+            "Richard Ríos (Benfica)",
+            "Juan Fernando Quintero (Racing Club)",
+            "Jorge Carrascal (Dinamo Moscow)",
+            "Kevin Castaño (Krasnodar)",
+            "Jaminton Campaz (Rosario Central)",
+        ],
+        "Forwards": [
+            "Luis Díaz ⭐ (Bayern Munich)",
+            "Carlos Andrés Gómez",
+            "Jhon Córdoba (Krasnodar)",
+            "Juan Camilo Hernández (Columbus)",
+            "Jhon Arias (Wolverhampton)",
+        ],
+    }
+    
+    embed = discord.Embed(
+        title="🇨🇴 Colombia 2026 World Cup Squad",
+        description="**Manager:** Néstor Lorenzo\n**Captain:** James Rodríguez\n**Group:** Portugal, DR Congo, Uzbekistan",
+        color=discord.Color(0xFCD116),
+        timestamp=datetime.utcnow(),
+    )
+    
+    for position, players in squad_data.items():
+        embed.add_field(
+            name=f"**{position}**",
+            value="\n".join(f"• {player}" for player in players),
+            inline=False,
+        )
+    
+    embed.set_footer(text="🇨🇴 ¡Vamos Colombia! ⚽")
+    await ctx.send(embed=embed)
+
+
+@bot.command(name="star", aliases=["stars", "key"])
+async def star_players(ctx):
+    """Show Colombia's key players to watch."""
+    stars = [
+        {
+            "name": "Luis Díaz",
+            "position": "Forward",
+            "club": "Bayern Munich",
+            "info": "Star winger, 7 goals in qualifiers",
+            "emoji": "⚡",
+        },
+        {
+            "name": "James Rodríguez",
+            "position": "Midfielder",
+            "club": "Minnesota United",
+            "info": "Captain, 2014 World Cup Golden Boot winner",
+            "emoji": "👑",
+        },
+        {
+            "name": "Richard Ríos",
+            "position": "Midfielder",
+            "club": "Benfica",
+            "info": "Rising star, impressed under Mourinho",
+            "emoji": "🌟",
+        },
+    ]
+    
+    embed = discord.Embed(
+        title="⭐ Colombia's Stars to Watch",
+        description="Key players for the 2026 World Cup",
+        color=discord.Color(0xCE1126),
+        timestamp=datetime.utcnow(),
+    )
+    
+    for star in stars:
+        embed.add_field(
+            name=f"{star['emoji']} {star['name']}",
+            value=f"**Position:** {star['position']}\n**Club:** {star['club']}\n**Info:** {star['info']}",
+            inline=False,
+        )
+    
+    embed.set_footer(text="🇨🇴 Los Cafeteros ⚽")
+    await ctx.send(embed=embed)
+
+
 # ─── Bot Events ──────────────────────────────────────────────────────────────
 
 @bot.event

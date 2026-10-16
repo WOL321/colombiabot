@@ -217,28 +217,156 @@ function App() {
       <section id="preview" className="py-20 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">👀 Live Preview</h2>
-            <p className="text-gray-400 text-lg">See what the bot looks like in Discord — with reactions!</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">👀 Command Previews</h2>
+            <p className="text-gray-400 text-lg">See what every command looks like in Discord</p>
           </div>
 
-          <div className="bg-[#2b2d31] rounded-2xl p-6 shadow-2xl border border-white/5">
-            {/* Discord Header */}
-            <div className="flex items-center gap-3 pb-4 mb-6 border-b border-white/10">
-              <div className="w-10 h-10 rounded-full flex items-center justify-center text-xl"
-                style={{ background: `linear-gradient(135deg, ${COLORS.yellow}, ${COLORS.red})` }}>
-                🇨🇴
+          {/* Regular Messages */}
+          <div className="mb-12">
+            <h3 className="text-xl font-bold mb-4">📝 Auto Messages</h3>
+            <div className="bg-[#2b2d31] rounded-2xl p-6 shadow-2xl border border-white/5">
+              <div className="flex items-center gap-3 pb-4 mb-6 border-b border-white/10">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-xl"
+                  style={{ background: `linear-gradient(135deg, ${COLORS.yellow}, ${COLORS.red})` }}>
+                  🇨🇴
+                </div>
+                <div>
+                  <div className="font-semibold text-white">Colombia Pride Bot</div>
+                  <div className="text-xs text-green-400">● Online</div>
+                </div>
               </div>
-              <div>
-                <div className="font-semibold text-white">Colombia Pride Bot</div>
-                <div className="text-xs text-green-400">● Online</div>
+              <div className="space-y-6">
+                <DiscordEmbed message="🇨🇴 ¡Viva Colombia! 🇨🇴" color={COLORS.yellow} index={0} reactions={["🇨🇴", "💛", "☕", "✨"]} />
+                <DiscordEmbed message="☕ Colombian coffee: liquid gold in a cup. ✨" color={COLORS.blue} index={1} reactions={["💙", "☕", "🌺", "🌟"]} />
+                <DiscordEmbed message="🦜 Biodiversity? Colombia has 10% of ALL species on Earth. 🌺" color={COLORS.red} index={2} reactions={["❤️", "🇨🇴", "🎉", "🏔️"]} />
               </div>
             </div>
+          </div>
 
-            {/* Messages with reactions */}
-            <div className="space-y-6">
-              <DiscordEmbed message="🇨🇴 ¡Viva Colombia! 🇨🇴" color={COLORS.yellow} index={0} reactions={["🇨🇴", "💛", "☕", "✨"]} />
-              <DiscordEmbed message="☕ We export more than just coffee. 🌎" color={COLORS.blue} index={1} reactions={["💙", "☕", "🌺", "🌟"]} />
-              <DiscordEmbed message="💛💙❤️ Yellow. Blue. Red. 🇨🇴" color={COLORS.red} index={2} reactions={["❤️", "🇨🇴", "🎉", "🏔️"]} />
+          {/* !fact Command */}
+          <div className="mb-12">
+            <h3 className="text-xl font-bold mb-4">💡 <code className="text-yellow-400">!fact</code> Command</h3>
+            <div className="bg-[#2b2d31] rounded-2xl p-6 shadow-2xl border border-white/5">
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-sm text-gray-400">
+                  <span className="text-white font-semibold">You:</span>
+                  <span className="bg-[#383a40] px-2 py-1 rounded">!fact</span>
+                </div>
+                <div className="bg-[#2b2d31] rounded-lg p-4 border-l-4" style={{ borderLeftColor: COLORS.yellow }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs"
+                      style={{ background: `linear-gradient(135deg, ${COLORS.yellow}, ${COLORS.red})` }}>
+                      🇨🇴
+                    </div>
+                    <span className="text-sm font-semibold text-white">Colombia Pride Bot</span>
+                  </div>
+                  <div className="ml-8">
+                    <div className="text-xs font-semibold mb-2" style={{ color: COLORS.yellow }}>🦜 Did You Know?</div>
+                    <div className="bg-[#1e1f22] rounded-lg p-3 border-l-2" style={{ borderLeftColor: COLORS.yellow }}>
+                      <p className="text-white text-sm">Colombia has more bird species than any other country — over 1,900!</p>
+                    </div>
+                    <div className="text-xs text-gray-500 mt-2">🇨🇴 Fun Colombian Facts</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* !squad Command */}
+          <div className="mb-12">
+            <h3 className="text-xl font-bold mb-4">⚽ <code className="text-yellow-400">!squad</code> Command</h3>
+            <div className="bg-[#2b2d31] rounded-2xl p-6 shadow-2xl border border-white/5">
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-sm text-gray-400">
+                  <span className="text-white font-semibold">You:</span>
+                  <span className="bg-[#383a40] px-2 py-1 rounded">!squad</span>
+                </div>
+                <div className="bg-[#2b2d31] rounded-lg p-4 border-l-4" style={{ borderLeftColor: COLORS.yellow }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs"
+                      style={{ background: `linear-gradient(135deg, ${COLORS.yellow}, ${COLORS.red})` }}>
+                      🇨🇴
+                    </div>
+                    <span className="text-sm font-semibold text-white">Colombia Pride Bot</span>
+                  </div>
+                  <div className="ml-8">
+                    <div className="text-xs font-semibold mb-2" style={{ color: COLORS.yellow }}>🇨🇴 Colombia 2026 World Cup Squad</div>
+                    <div className="bg-[#1e1f22] rounded-lg p-3 border-l-2" style={{ borderLeftColor: COLORS.yellow }}>
+                      <p className="text-gray-400 text-xs mb-2">Manager: Néstor Lorenzo | Captain: James Rodríguez</p>
+                      <p className="text-white text-xs font-semibold mb-1">Forwards:</p>
+                      <p className="text-gray-300 text-xs">• Luis Díaz ⭐ (Bayern Munich)</p>
+                      <p className="text-gray-300 text-xs">• Jhon Córdoba (Krasnodar)</p>
+                      <p className="text-gray-300 text-xs">• Jhon Arias (Wolverhampton)</p>
+                      <p className="text-white text-xs font-semibold mb-1 mt-2">Midfielders:</p>
+                      <p className="text-gray-300 text-xs">• James Rodríguez ⭐ (Minnesota United)</p>
+                      <p className="text-gray-300 text-xs">• Richard Ríos (Benfica)</p>
+                      <p className="text-gray-300 text-xs">• Jefferson Lerma (Crystal Palace)</p>
+                    </div>
+                    <div className="text-xs text-gray-500 mt-2">🇨🇴 ¡Vamos Colombia! ⚽</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* !quote Command */}
+          <div className="mb-12">
+            <h3 className="text-xl font-bold mb-4">💭 <code className="text-yellow-400">!quote</code> Command</h3>
+            <div className="bg-[#2b2d31] rounded-2xl p-6 shadow-2xl border border-white/5">
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-sm text-gray-400">
+                  <span className="text-white font-semibold">You:</span>
+                  <span className="bg-[#383a40] px-2 py-1 rounded">!quote</span>
+                </div>
+                <div className="bg-[#2b2d31] rounded-lg p-4 border-l-4" style={{ borderLeftColor: COLORS.blue }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs"
+                      style={{ background: `linear-gradient(135deg, ${COLORS.yellow}, ${COLORS.red})` }}>
+                      🇨🇴
+                    </div>
+                    <span className="text-sm font-semibold text-white">Colombia Pride Bot</span>
+                  </div>
+                  <div className="ml-8">
+                    <div className="text-xs font-semibold mb-2" style={{ color: COLORS.blue }}>💭 Colombian Wisdom</div>
+                    <div className="bg-[#1e1f22] rounded-lg p-3 border-l-2" style={{ borderLeftColor: COLORS.blue }}>
+                      <p className="text-white text-sm italic">"Life is not what one lived, but what one remembers."</p>
+                    </div>
+                    <div className="text-xs text-gray-500 mt-2">— Gabriel García Márquez 🇨🇴</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* !flag Command */}
+          <div className="mb-12">
+            <h3 className="text-xl font-bold mb-4">🏳️ <code className="text-yellow-400">!flag</code> Command</h3>
+            <div className="bg-[#2b2d31] rounded-2xl p-6 shadow-2xl border border-white/5">
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-sm text-gray-400">
+                  <span className="text-white font-semibold">You:</span>
+                  <span className="bg-[#383a40] px-2 py-1 rounded">!flag</span>
+                </div>
+                <div className="bg-[#2b2d31] rounded-lg p-4 border-l-4" style={{ borderLeftColor: COLORS.yellow }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs"
+                      style={{ background: `linear-gradient(135deg, ${COLORS.yellow}, ${COLORS.red})` }}>
+                      🇨🇴
+                    </div>
+                    <span className="text-sm font-semibold text-white">Colombia Pride Bot</span>
+                  </div>
+                  <div className="ml-8">
+                    <div className="text-xs font-semibold mb-2" style={{ color: COLORS.yellow }}>🇨🇴 The Colombian Flag</div>
+                    <div className="bg-[#1e1f22] rounded-lg p-3 border-l-2" style={{ borderLeftColor: COLORS.yellow }}>
+                      <p className="text-gray-300 text-xs mb-2">The national flag symbolizes sovereignty, honor, and bravery.</p>
+                      <p className="text-xs"><span style={{ color: COLORS.yellow }}>💛 Yellow:</span> <span className="text-gray-300">Sovereignty & justice</span></p>
+                      <p className="text-xs"><span style={{ color: COLORS.blue }}>💙 Blue:</span> <span className="text-gray-300">Seas & loyalty</span></p>
+                      <p className="text-xs"><span style={{ color: COLORS.red }}>❤️ Red:</span> <span className="text-gray-300">Blood of heroes</span></p>
+                    </div>
+                    <div className="text-xs text-gray-500 mt-2">🇨🇴 Ley 12 de 1967</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -424,19 +552,47 @@ pip install -r requirements.txt`}
                 <tbody>
                   <tr className="border-b border-white/5">
                     <td className="px-6 py-4 font-mono text-sm" style={{ color: COLORS.yellow }}>!ping</td>
-                    <td className="px-6 py-4 text-sm text-gray-400">Check if the bot is online and responsive</td>
+                    <td className="px-6 py-4 text-sm text-gray-400">Check bot status and latency</td>
                   </tr>
                   <tr className="border-b border-white/5">
                     <td className="px-6 py-4 font-mono text-sm" style={{ color: COLORS.blue }}>!stats</td>
-                    <td className="px-6 py-4 text-sm text-gray-400">View bot statistics (messages, cycles, servers)</td>
+                    <td className="px-6 py-4 text-sm text-gray-400">View bot statistics</td>
                   </tr>
                   <tr className="border-b border-white/5">
                     <td className="px-6 py-4 font-mono text-sm" style={{ color: COLORS.red }}>!holidays</td>
-                    <td className="px-6 py-4 text-sm text-gray-400">See Colombian holidays the bot celebrates</td>
+                    <td className="px-6 py-4 text-sm text-gray-400">See Colombian holidays calendar</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="px-6 py-4 font-mono text-sm" style={{ color: COLORS.yellow }}>!fact</td>
+                    <td className="px-6 py-4 text-sm text-gray-400">Random Colombian fact</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="px-6 py-4 font-mono text-sm" style={{ color: COLORS.blue }}>!quote</td>
+                    <td className="px-6 py-4 text-sm text-gray-400">Inspirational Colombian quote</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="px-6 py-4 font-mono text-sm" style={{ color: COLORS.red }}>!flag</td>
+                    <td className="px-6 py-4 text-sm text-gray-400">Show the Colombian flag</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="px-6 py-4 font-mono text-sm" style={{ color: COLORS.yellow }}>!color</td>
+                    <td className="px-6 py-4 text-sm text-gray-400">Random flag color with meaning</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="px-6 py-4 font-mono text-sm" style={{ color: COLORS.blue }}>!emoji</td>
+                    <td className="px-6 py-4 text-sm text-gray-400">Random Colombian emojis</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="px-6 py-4 font-mono text-sm" style={{ color: COLORS.red }}>!message</td>
+                    <td className="px-6 py-4 text-sm text-gray-400">Random pride message</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="px-6 py-4 font-mono text-sm" style={{ color: COLORS.yellow }}>!squad</td>
+                    <td className="px-6 py-4 text-sm text-gray-400">Colombia's 2026 World Cup roster ⚽</td>
                   </tr>
                   <tr>
-                    <td className="px-6 py-4 font-mono text-sm" style={{ color: COLORS.yellow }}>!help</td>
-                    <td className="px-6 py-4 text-sm text-gray-400">Show available commands</td>
+                    <td className="px-6 py-4 font-mono text-sm" style={{ color: COLORS.blue }}>!star</td>
+                    <td className="px-6 py-4 text-sm text-gray-400">Key players to watch ⭐</td>
                   </tr>
                 </tbody>
               </table>
