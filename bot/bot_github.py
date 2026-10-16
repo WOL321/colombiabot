@@ -1,7 +1,6 @@
 """
-🇨🇴 Colombia Pride Bot - GitHub Actions Version (Smart Mode)
-Stays online for 2-3 minutes to respond to commands, then exits.
-Uses ~1,500 minutes/month (under GitHub's 2,000 limit)
+🇨🇴 Colombia Pride Bot - GitHub Actions Version
+Stays online for 2 minutes to respond to commands, then exits.
 """
 
 import os
@@ -34,7 +33,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
 )
-logger = logging.getLogger("colombia_bot_github")
+logger = logging.getLogger("colombia_bot")
 
 # ─── Bot Setup ───────────────────────────────────────────────────────────────
 
@@ -45,7 +44,7 @@ bot = commands.Bot(
     command_prefix="!",
     intents=intents,
     description="🇨🇴 Celebrating Colombia with pride and elegance",
-    help_command=None,  # Disable built-in help to allow custom help command
+    help_command=None,
 )
 
 # Track stats
@@ -53,7 +52,7 @@ messages_sent = 0
 cycle_count = 0
 
 
-# ─── Embed Builder ───────────────────────────────────────────────────────────
+# ─── Helper Functions ────────────────────────────────────────────────────────
 
 def get_random_emoji_message(base_message: str) -> str:
     """Returns a random emoji variation of a base message."""
@@ -159,7 +158,7 @@ async def send_message():
 
 @bot.command(name="ping", aliases=["status", "alive"])
 async def ping(ctx):
-    """Check if the bot is online and responsive."""
+    """Check if the bot is online."""
     latency = round(bot.latency * 1000)
     holiday = get_todays_holiday()
     holiday_text = f"\n🎉 **Holiday Today:** `{holiday}`" if holiday else ""
@@ -194,7 +193,7 @@ async def stats(ctx):
 
 @bot.command(name="holidays", aliases=["festivos", "calendar"])
 async def holidays(ctx):
-    """Show Colombian holidays the bot celebrates."""
+    """Show Colombian holidays."""
     holiday_names = {
         "new_year": "🎆 New Year's Day (Jan 1)",
         "labor_day": "💪 Labor Day (May 1)",
@@ -226,6 +225,150 @@ async def holidays(ctx):
     await ctx.send(embed=embed)
 
 
+@bot.command(name="fact", aliases=["dato", "sabias"])
+async def fact(ctx):
+    """Share a random Colombian fact."""
+    facts = [
+        ("🦜", "Colombia has more bird species than any other country — over 1,900!"),
+        ("🌺", "Colombia produces 70% of the world's emeralds."),
+        ("☕", "Colombian coffee is considered the best in the world."),
+        ("🏔️", "Colombia is the only South American country with coastlines on both the Pacific and Caribbean."),
+        ("🌳", "Colombia contains 10% of all species on Earth."),
+        ("🎨", "Fernando Botero's art is recognized worldwide for its unique style."),
+        ("🎵", "Colombia has 1,020 traditional rhythms and musical styles."),
+        ("🌹", "Colombia is the second-largest flower exporter in the world."),
+        ("🏛️", "Bogotá's Gold Museum houses the world's largest collection of pre-Columbian gold."),
+        ("🌊", "Colombia has the most freshwater rivers in South America."),
+        ("🦋", "Colombia has over 3,274 butterfly species — more than any other country."),
+        ("🎭", "The Barranquilla Carnival is the second-largest in the world."),
+        ("📚", "Gabriel García Márquez won the Nobel Prize in Literature in 1982."),
+        ("🏆", "Colombia has won 37 Olympic medals throughout history."),
+        ("🌿", "The Amazon rainforest covers 48% of Colombia's territory."),
+    ]
+    
+    emoji, fact_text = random.choice(facts)
+    
+    embed = discord.Embed(
+        title=f"{emoji} Did You Know?",
+        description=fact_text,
+        color=random.choice(EMBED_COLORS),
+        timestamp=datetime.utcnow(),
+    )
+    embed.set_footer(text="🇨🇴 Fun Colombian Facts")
+    await ctx.send(embed=embed)
+
+
+@bot.command(name="quote", aliases=["frase", "inspiracion"])
+async def quote(ctx):
+    """Share an inspirational Colombian quote."""
+    quotes = [
+        ("Gabriel García Márquez", "Life is not what one lived, but what one remembers."),
+        ("Gabriel García Márquez", "Human beings are not born once and for all on the day their mothers give birth to them."),
+        ("Shakira", "I'm not a feminist, but I believe in women's power."),
+        ("Fernando Botero", "Art is not about copying reality, but creating a new one."),
+        ("Colombian Proverb", "El que mucho abarca, poco aprieta. (He who grasps at too much, holds little.)"),
+        ("Colombian Proverb", "No hay mal que por bien no venga. (There's no bad from which good doesn't come.)"),
+        ("Colombian Proverb", "Más vale pájaro en mano que ciento volando. (A bird in hand is worth two in the bush.)"),
+        ("Juanes", "Music is the universal language that connects us all."),
+        ("Carlos Vives", "Our roots make us who we are."),
+        ("Nairo Quintana", "Every mountain is an opportunity."),
+    ]
+    
+    author, quote_text = random.choice(quotes)
+    
+    embed = discord.Embed(
+        title="💭 Colombian Wisdom",
+        description=f'"{quote_text}"',
+        color=random.choice(EMBED_COLORS),
+        timestamp=datetime.utcnow(),
+    )
+    embed.set_footer(text=f"— {author} 🇨🇴")
+    await ctx.send(embed=embed)
+
+
+@bot.command(name="flag", aliases=["bandera"])
+async def flag(ctx):
+    """Show the Colombian flag."""
+    embed = discord.Embed(
+        title="🇨🇴 The Colombian Flag",
+        description=(
+            "The national flag of Colombia is a symbol of our sovereignty, "
+            "honor, and bravery.\n\n"
+            "**Yellow** (top half): Sovereignty, justice, and the rich soil\n"
+            "**Blue** (quarter): The sky, the seas, loyalty, and perseverance\n"
+            "**Red** (quarter): The blood of heroes who fought for freedom"
+        ),
+        color=discord.Color(0xFCD116),
+        timestamp=datetime.utcnow(),
+    )
+    embed.set_thumbnail(url="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Colombia.svg/1200px-Flag_of_Colombia.svg.png")
+    embed.set_footer(text="🇨🇴 Ley 12 de 1967")
+    await ctx.send(embed=embed)
+
+
+@bot.command(name="color", aliases=["colour"])
+async def color_cmd(ctx):
+    """Show a random flag color."""
+    colors = [
+        {"name": "Yellow", "hex": "FCD116", "meaning": "Sovereignty, justice, and the rich Colombian soil", "emoji": "💛"},
+        {"name": "Blue", "hex": "003893", "meaning": "The sky, the seas, loyalty, and perseverance", "emoji": "💙"},
+        {"name": "Red", "hex": "CE1126", "meaning": "The blood of heroes who fought for our freedom", "emoji": "❤️"},
+    ]
+    
+    color = random.choice(colors)
+    
+    embed = discord.Embed(
+        title=f"{color['emoji']} {color['name']}",
+        description=color['meaning'],
+        color=discord.Color(int(color['hex'], 16)),
+        timestamp=datetime.utcnow(),
+    )
+    embed.add_field(name="Hex Code", value=f"`#{color['hex']}`", inline=True)
+    embed.set_footer(text="🇨🇴 Official Colombian Flag Colors")
+    await ctx.send(embed=embed)
+
+
+@bot.command(name="emoji", aliases=["emojis"])
+async def emoji_cmd(ctx):
+    """Show random Colombian emojis."""
+    emoji_sets = [
+        ["🇨🇴", "💛", "💙", "❤️"],
+        ["☕", "🌱", "🏔️", "🌺"],
+        ["🦜", "🦋", "🐆", "🌳"],
+        ["💃", "🕺", "🎵", "🎺"],
+        ["🏔️", "🌊", "🌅", "⛰️"],
+        ["🎉", "✨", "🌟", "💫"],
+        ["🌹", "🌸", "🌻", "🌷"],
+        ["📚", "🎨", "🎭", "🎬"],
+    ]
+    
+    emojis = random.choice(emoji_sets)
+    
+    embed = discord.Embed(
+        title="🇨🇴 Colombian Emojis",
+        description=" ".join(emojis),
+        color=random.choice(EMBED_COLORS),
+        timestamp=datetime.utcnow(),
+    )
+    embed.set_footer(text="🇨🇴 Express your Colombian pride!")
+    await ctx.send(embed=embed)
+
+
+@bot.command(name="message", aliases=["msg", "random"])
+async def message_cmd(ctx):
+    """Show a random pride message."""
+    base_message = random.choice(BASE_MESSAGES)
+    message = get_random_emoji_message(base_message)
+    
+    embed = discord.Embed(
+        description=message,
+        color=random.choice(EMBED_COLORS),
+        timestamp=datetime.utcnow(),
+    )
+    embed.set_footer(text="🇨🇴 República de Colombia")
+    await ctx.send(embed=embed)
+
+
 @bot.command(name="help")
 async def help_cmd(ctx):
     """Show available commands."""
@@ -238,6 +381,12 @@ async def help_cmd(ctx):
     embed.add_field(name="`!ping`", value="Check bot status", inline=False)
     embed.add_field(name="`!stats`", value="View statistics", inline=False)
     embed.add_field(name="`!holidays`", value="See Colombian holidays", inline=False)
+    embed.add_field(name="`!fact`", value="Random Colombian fact", inline=False)
+    embed.add_field(name="`!quote`", value="Inspirational Colombian quote", inline=False)
+    embed.add_field(name="`!flag`", value="Show the Colombian flag", inline=False)
+    embed.add_field(name="`!color`", value="Random flag color with meaning", inline=False)
+    embed.add_field(name="`!emoji`", value="Random Colombian emojis", inline=False)
+    embed.add_field(name="`!message`", value="Random pride message", inline=False)
     embed.add_field(name="`!help`", value="Show this message", inline=False)
     embed.set_footer(text="🇨🇴 República de Colombia")
     await ctx.send(embed=embed)
@@ -253,7 +402,7 @@ async def on_ready():
     
     logger.info(f"🇨🇴 {bot.user.name} is online!")
     logger.info(f"   Cycle #{cycle_count}")
-    logger.info(f"   Will stay online for ~2 minutes (commands work!)")
+    logger.info(f"   Will stay online for ~2 minutes")
 
     await bot.change_presence(
         activity=discord.Activity(
@@ -263,25 +412,24 @@ async def on_ready():
         status=discord.Status.online,
     )
 
-    # Send a message immediately (80% chance)
+    # Send a message (80% chance)
     if random.random() < 0.80:
         await asyncio.sleep(random.uniform(3, 10))
         await send_message()
     else:
         logger.info("💤 Skipping message this session")
 
-    # Stay online for 2 minutes to respond to commands
+    # Stay online for 2 minutes
     logger.info("👂 Listening for commands for 2 minutes...")
-    await asyncio.sleep(120)  # 2 minutes = 120 seconds
+    await asyncio.sleep(120)
 
-    # Time to shut down
-    logger.info("👋 Session ending, shutting down...")
+    logger.info("👋 Session ending...")
     await bot.close()
 
 
 @bot.event
 async def on_command_error(ctx, error):
-    """Global error handler for commands."""
+    """Global error handler."""
     if isinstance(error, commands.CommandNotFound):
         return
     logger.error(f"Command error: {error}")
@@ -291,10 +439,8 @@ async def on_command_error(ctx, error):
 
 def main():
     """Main entry point."""
-    logger.info("🚀 Starting Colombia Pride Bot (GitHub Actions - Smart Mode)")
-    logger.info("   Bot will stay online for ~2 minutes")
-    logger.info("   Commands work during this window!")
-    logger.info("   Commands: !ping, !stats, !holidays, !help")
+    logger.info("🚀 Starting Colombia Pride Bot")
+    logger.info("   Commands: !ping, !stats, !holidays, !fact, !quote, !flag, !color, !emoji, !message, !help")
 
     try:
         bot.run(BOT_TOKEN)

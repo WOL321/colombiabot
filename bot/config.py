@@ -27,11 +27,35 @@ EMBED_COLORS: list[discord.Color] = [
 ]
 
 # ─── Base Messages ───────────────────────────────────────────────────────────
+# Expanded with more creative, proud Colombian content
 
 BASE_MESSAGES: list[str] = [
+    # Original classics
     "¡Viva Colombia!",
     "We export more than just coffee.",
     "Yellow. Blue. Red.",
+    
+    # Cultural pride
+    "From the Andes to the Caribbean — Colombia has it all.",
+    "Gabriel García Márquez taught the world to dream in Spanish.",
+    "Shakira, Shakira! Colombia's voice to the world.",
+    "Colombian coffee: liquid gold in a cup.",
+    "Biodiversity? Colombia has 10% of ALL species on Earth.",
+    "Cartagena: where history meets the sea.",
+    "Medellín: City of Eternal Spring.",
+    "Bogotá: the heart that beats at 2,640 meters.",
+    "Colombia: where emeralds are born.",
+    "From salsa to vallenato — our rhythm is infectious.",
+    "Arepas, bandeja paisa, ajiaco — food that feeds the soul.",
+    "Colombia: more flowers than you can imagine.",
+    "The Amazon starts here. So does the magic.",
+    "Colombian warmth: it's in our blood.",
+    "From coffee farms to tech hubs — we're transforming.",
+    "Colombia: where every color has a story.",
+    "Our mountains touch the sky. Our spirit touches hearts.",
+    "Colombia: land of a thousand rhythms.",
+    "From the Pacific to the Caribbean — we embrace both oceans.",
+    "Colombian resilience: forged in fire, shining bright.",
 ]
 
 # ─── Emoji Variations ────────────────────────────────────────────────────────
@@ -67,6 +91,106 @@ EMOJI_VARIATIONS: dict[str, list[str]] = {
         "🇨🇴 Yellow. Blue. Red. 🇨🇴",
         "☀️ Yellow. 🌊 Blue. 🌹 Red.",
         "💫 Yellow. Blue. Red. 💫",
+    ],
+    "From the Andes to the Caribbean — Colombia has it all.": [
+        "🏔️ From the Andes to the Caribbean — Colombia has it all. 🌊",
+        "🌄 From the Andes to the Caribbean — Colombia has it all. 🏖️",
+        "🦅 From the Andes to the Caribbean — Colombia has it all. 🐠",
+    ],
+    "Gabriel García Márquez taught the world to dream in Spanish.": [
+        "📚 Gabriel García Márquez taught the world to dream in Spanish. ✨",
+        "🦋 Gabriel García Márquez taught the world to dream in Spanish. 📖",
+        "🌹 Gabriel García Márquez taught the world to dream in Spanish. 🇨🇴",
+    ],
+    "Shakira, Shakira! Colombia's voice to the world.": [
+        "🎤 Shakira, Shakira! Colombia's voice to the world. 🌟",
+        "💃 Shakira, Shakira! Colombia's voice to the world. 🎶",
+        "🎵 Shakira, Shakira! Colombia's voice to the world. 🇨🇴",
+    ],
+    "Colombian coffee: liquid gold in a cup.": [
+        "☕ Colombian coffee: liquid gold in a cup. ✨",
+        "🌱 Colombian coffee: liquid gold in a cup. 💛",
+        "☕🇨🇴 Colombian coffee: liquid gold in a cup. 🏆",
+    ],
+    "Biodiversity? Colombia has 10% of ALL species on Earth.": [
+        "🦜 Biodiversity? Colombia has 10% of ALL species on Earth. 🌺",
+        "🌿 Biodiversity? Colombia has 10% of ALL species on Earth. 🦋",
+        "🐆 Biodiversity? Colombia has 10% of ALL species on Earth. 🌎",
+    ],
+    "Cartagena: where history meets the sea.": [
+        "🏰 Cartagena: where history meets the sea. 🌊",
+        "🏛️ Cartagena: where history meets the sea. ⚓",
+        "🌅 Cartagena: where history meets the sea. 🇨🇴",
+    ],
+    "Medellín: City of Eternal Spring.": [
+        "🌸 Medellín: City of Eternal Spring. 🌺",
+        "🌷 Medellín: City of Eternal Spring. ☀️",
+        "🏔️ Medellín: City of Eternal Spring. 🌹",
+    ],
+    "Bogotá: the heart that beats at 2,640 meters.": [
+        "🏙️ Bogotá: the heart that beats at 2,640 meters. 💓",
+        "🌆 Bogotá: the heart that beats at 2,640 meters. 🇨🇴",
+        "⛰️ Bogotá: the heart that beats at 2,640 meters. ✨",
+    ],
+    "Colombia: where emeralds are born.": [
+        "💚 Colombia: where emeralds are born. 💎",
+        "✨ Colombia: where emeralds are born. 🇨🇴",
+        "💎 Colombia: where emeralds are born. 🌟",
+    ],
+    "From salsa to vallenato — our rhythm is infectious.": [
+        "💃 From salsa to vallenato — our rhythm is infectious. 🎶",
+        "🎵 From salsa to vallenato — our rhythm is infectious. 🕺",
+        "🎺 From salsa to vallenato — our rhythm is infectious. 🇨🇴",
+    ],
+    "Arepas, bandeja paisa, ajiaco — food that feeds the soul.": [
+        "🫓 Arepas, bandeja paisa, ajiaco — food that feeds the soul. 🍲",
+        "🍽️ Arepas, bandeja paisa, ajiaco — food that feeds the soul. 😋",
+        "🌽 Arepas, bandeja paisa, ajiaco — food that feeds the soul. 🇨🇴",
+    ],
+    "Colombia: more flowers than you can imagine.": [
+        "🌹 Colombia: more flowers than you can imagine. 🌺",
+        "🌸 Colombia: more flowers than you can imagine. 🌷",
+        "💐 Colombia: more flowers than you can imagine. 🌻",
+    ],
+    "The Amazon starts here. So does the magic.": [
+        "🌳 The Amazon starts here. So does the magic. ✨",
+        "🦜 The Amazon starts here. So does the magic. 🌿",
+        "🌲 The Amazon starts here. So does the magic. 🇨🇴",
+    ],
+    "Colombian warmth: it's in our blood.": [
+        "☀️ Colombian warmth: it's in our blood. 💛",
+        "🤗 Colombian warmth: it's in our blood. ❤️",
+        "🌞 Colombian warmth: it's in our blood. 🇨🇴",
+    ],
+    "From coffee farms to tech hubs — we're transforming.": [
+        "☕ From coffee farms to tech hubs — we're transforming. 💻",
+        "🌱 From coffee farms to tech hubs — we're transforming. 🚀",
+        "🇨🇴 From coffee farms to tech hubs — we're transforming. ✨",
+    ],
+    "Colombia: where every color has a story.": [
+        "🎨 Colombia: where every color has a story. 📖",
+        "🌈 Colombia: where every color has a story. 🇨🇴",
+        "✨ Colombia: where every color has a story. 💫",
+    ],
+    "Our mountains touch the sky. Our spirit touches hearts.": [
+        "🏔️ Our mountains touch the sky. Our spirit touches hearts. 💙",
+        "⛰️ Our mountains touch the sky. Our spirit touches hearts. ❤️",
+        "🌄 Our mountains touch the sky. Our spirit touches hearts. 🇨🇴",
+    ],
+    "Colombia: land of a thousand rhythms.": [
+        "🎵 Colombia: land of a thousand rhythms. 💃",
+        "🎶 Colombia: land of a thousand rhythms. 🕺",
+        "🎺 Colombia: land of a thousand rhythms. 🇨🇴",
+    ],
+    "From the Pacific to the Caribbean — we embrace both oceans.": [
+        "🌊 From the Pacific to the Caribbean — we embrace both oceans. 🏖️",
+        "🐋 From the Pacific to the Caribbean — we embrace both oceans. 🇨🇴",
+        "⚓ From the Pacific to the Caribbean — we embrace both oceans. ✨",
+    ],
+    "Colombian resilience: forged in fire, shining bright.": [
+        "🔥 Colombian resilience: forged in fire, shining bright. ✨",
+        "💪 Colombian resilience: forged in fire, shining bright. 🌟",
+        "🇨🇴 Colombian resilience: forged in fire, shining bright. 💛",
     ],
 }
 
