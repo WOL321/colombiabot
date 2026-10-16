@@ -18,6 +18,7 @@ Each message appears as a beautiful embed using the official Colombian flag colo
 ## Features
 
 - **Clean embeds** with Colombian flag colors
+- **Interactive polls** — yes/no questions in a separate channel (optional)
 - **Natural timing** — messages every 25-40 minutes
 - **Emoji reactions** — 🇨🇴 💛 💙 ❤️
 - **Simple command** — `!ping` to check status
@@ -36,20 +37,21 @@ Each message appears as a beautiful embed using the official Colombian flag colo
 7. Select permissions: Send Messages, Embed Links, Add Reactions, Read Message History
 8. Copy the generated URL and invite the bot to your server
 
-### 2. Get Channel ID
+### 2. Get Channel IDs
 
 1. In Discord, enable Developer Mode (User Settings → Advanced)
-2. Right-click the channel where you want the bot to post
-3. Click "Copy Channel ID"
+2. Right-click the channel where you want pride messages → "Copy Channel ID"
+3. (Optional) Right-click a different channel for polls → "Copy Channel ID"
 
 ### 3. Deploy to GitHub
 
 1. Create a new GitHub repository
 2. Upload all files from the `bot/` folder
 3. Go to Settings → Secrets and variables → Actions
-4. Add two secrets:
+4. Add secrets:
    - `DISCORD_BOT_TOKEN` = your bot token
-   - `DISCORD_CHANNEL_ID` = your channel ID
+   - `DISCORD_CHANNEL_ID` = your pride messages channel ID
+   - `DISCORD_POLL_CHANNEL_ID` = (optional) your polls channel ID
 5. The bot will run automatically every 50 minutes
 
 ## Commands
@@ -60,8 +62,9 @@ Each message appears as a beautiful embed using the official Colombian flag colo
 
 The bot runs on GitHub Actions:
 - Stays online for 2 minutes every 50 minutes
-- Posts a random message with 80% probability
-- Adds 2-4 random emoji reactions
+- Posts a random pride message or poll
+- 70% chance: pride message with emoji reactions
+- 30% chance: yes/no poll (if poll channel is configured)
 - Uses ~1,500 minutes/month (under GitHub's 2,000 limit)
 
 ## Files

@@ -15,7 +15,9 @@ from discord.ext import commands
 from config import (
     BOT_TOKEN,
     CHANNEL_ID,
+    POLL_CHANNEL_ID,
     MESSAGES,
+    POLL_QUESTIONS,
     EMBED_COLORS,
     MIN_GAP_MINUTES,
     MAX_GAP_MINUTES,
@@ -73,9 +75,47 @@ async def add_reactions(message: discord.Message, reactions: list):
             break
 
 
+async def send_poll():
+    """Send a yes/no poll to the poll channel."""
+    if not POLL_CHANNEL_ID:
+        logger.info("⏭️ No poll channel configured, skipping poll")
+        return
+    
+    poll_channel = bot.get_channel(POLL_CHANNEL_ID)
+    if not poll_channel:
+        try:
+            poll_channel = await bot.fetch_channel(POLL_CHANNEL_ID)
+        except Exception as e:
+            logger.error(f"Cannot access poll channel: {e}")
+            return
+    
+    question = random.choice(POLL_QUESTIONS)
+    
+    embed = discord.Embed(
+        description=f"🤔 **{question}**",
+        color=random.choice(EMBED_COLORS),
+        timestamp=datetime.utcnow(),
+    )
+    embed.set_footer(text=FOOTER)
+    
+    try:
+        poll_message = await poll_channel.send(embed=embed)
+        await poll_message.add_reaction("✅")
+        await asyncio.sleep(0.5)
+        await poll_message.add_reaction("❌")
+        logger.info(f"📊 Sent poll: {question}")
+    except Exception as e:
+        logger.error(f"❌ Failed to send poll: {e}")
+
+
 async def send_message():
-    """Send one message with reactions."""
+    """Send one message or poll with reactions."""
     global messages_sent
+    
+    # 70% chance to send pride message, 30% chance to send poll
+    if POLL_CHANNEL_ID and random.random() < 0.3:
+        await send_poll()
+        return
     
     channel = bot.get_channel(CHANNEL_ID)
     if not channel:

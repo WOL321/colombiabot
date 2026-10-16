@@ -16,7 +16,9 @@ from discord.ext import commands
 from config import (
     BOT_TOKEN,
     CHANNEL_ID,
+    POLL_CHANNEL_ID,
     MESSAGES,
+    POLL_QUESTIONS,
     EMBED_COLORS,
     MIN_GAP_MINUTES,
     MAX_GAP_MINUTES,
@@ -81,10 +83,43 @@ async def add_reactions(message: discord.Message, reactions: list):
             break
 
 
+async def send_poll():
+    """Send a yes/no poll to the poll channel."""
+    if not POLL_CHANNEL_ID:
+        logger.info("⏭️ No poll channel configured, skipping poll")
+        return
+    
+    poll_channel = bot.get_channel(POLL_CHANNEL_ID)
+    if not poll_channel:
+        try:
+            poll_channel = await bot.fetch_channel(POLL_CHANNEL_ID)
+        except Exception as e:
+            logger.error(f"Cannot access poll channel: {e}")
+            return
+    
+    question = random.choice(POLL_QUESTIONS)
+    
+    embed = discord.Embed(
+        description=f"🤔 **{question}**",
+        color=random.choice(EMBED_COLORS),
+        timestamp=datetime.utcnow(),
+    )
+    embed.set_footer(text=FOOTER)
+    
+    try:
+        poll_message = await poll_channel.send(embed=embed)
+        await poll_message.add_reaction("✅")
+        await asyncio.sleep(0.5)
+        await poll_message.add_reaction("❌")
+        logger.info(f"📊 Sent poll: {question}")
+    except Exception as e:
+        logger.error(f"❌ Failed to send poll: {e}")
+
+
 # ─── Core Messaging Loop ─────────────────────────────────────────────────────
 
 async def send_cycle_messages():
-    """Main cycle loop - sends messages with natural timing."""
+    """Main cycle loop - sends messages or polls with natural timing."""
     channel = bot.get_channel(CHANNEL_ID)
     
     if not channel:
@@ -98,21 +133,25 @@ async def send_cycle_messages():
     logger.info(f"🇨🇴 Starting cycle ({messages_this_cycle} messages)")
 
     for i in range(messages_this_cycle):
-        # Get random message with its style
-        message_data = random.choice(MESSAGES)
-        embed = create_embed(message_data)
+        # 70% chance to send pride message, 30% chance to send poll
+        if POLL_CHANNEL_ID and random.random() < 0.3:
+            await send_poll()
+        else:
+            # Get random message with its style
+            message_data = random.choice(MESSAGES)
+            embed = create_embed(message_data)
 
-        try:
-            sent_message = await channel.send(embed=embed)
-            global messages_sent
-            messages_sent += 1
-            logger.info(f"✨ Sent: {message_data['text']}")
+            try:
+                sent_message = await channel.send(embed=embed)
+                global messages_sent
+                messages_sent += 1
+                logger.info(f"✨ Sent: {message_data['text']}")
 
-            # Add themed reactions
-            await add_reactions(sent_message, message_data["reactions"])
+                # Add themed reactions
+                await add_reactions(sent_message, message_data["reactions"])
 
-        except Exception as e:
-            logger.error(f"❌ Failed to send: {e}")
+            except Exception as e:
+                logger.error(f"❌ Failed to send: {e}")
 
         # Wait before next message (unless it's the last one)
         if i < messages_this_cycle - 1:
