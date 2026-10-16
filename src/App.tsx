@@ -7,12 +7,12 @@ const COLORS = {
 };
 
 const MESSAGES = [
-  { text: 'Que viva Colombia!', emoji: '🎆🇨🇴🎆', author: '☀️ Golden Spirit', reactions: ['🇨🇴', '🎆', '💛', '💙', '❤️'] },
-  { text: 'Yellow. Blue. Red.', emoji: '💛💙❤️', author: '🎨 Tricolor Pride', reactions: ['💛', '💙', '❤️', '🇨🇴', '✨'] },
-  { text: 'We export more than just coffee ;)', emoji: '☕✨🌎', author: '☕ Coffee & More', reactions: ['☕', '✨', '🌎', '💚', '🇨🇴'] },
-  { text: 'Colombia needs no explanation.', emoji: '🏔️🌊🦜', author: '🏔️ Pure Pride', reactions: ['🏔️', '🌊', '🦜', '🇨🇴', '💎'] },
-  { text: 'The tricolor still means something.', emoji: '🇨🇴🔥🇨🇴', author: '🔥 Forever Proud', reactions: ['🇨🇴', '🔥', '💛', '💙', '❤️'] },
-  { text: 'From the Caribbean to the Amazon.', emoji: '🌴🌳🌊', author: '🌎 Land of Wonder', reactions: ['🌴', '🌳', '🌊', '🦜', '🇨🇴'] },
+  { text: 'Que viva Colombia!', emoji: '🎆🇨🇴🎆', author: 'no thoughts just colombia', reactions: ['🇨🇴', '🎆', '💛', '💙', '❤️'] },
+  { text: 'Yellow. Blue. Red.', emoji: '💛💙❤️', author: 'the colors hit different', reactions: ['💛', '💙', '❤️', '🇨🇴', '✨'] },
+  { text: 'We export more than just coffee ;)', emoji: '☕✨🌎', author: 'yes we\'re that country', reactions: ['☕', '✨', '🌎', '💚', '🇨🇴'] },
+  { text: 'Colombia needs no explanation.', emoji: '🏔️🌊🦜', author: 'if you know you know', reactions: ['🏔️', '🌊', '🦜', '🇨🇴', '💎'] },
+  { text: 'The tricolor still means something.', emoji: '🇨🇴🔥🇨🇴', author: 'real talk', reactions: ['🇨🇴', '🔥', '💛', '💙', '❤️'] },
+  { text: 'From the Caribbean to the Amazon.', emoji: '🌴🌳🌊', author: 'try explaining this place', reactions: ['🌴', '🌳', '🌊', '🦜', '🇨🇴'] },
 ];
 
 function App() {

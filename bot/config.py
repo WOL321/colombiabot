@@ -29,37 +29,37 @@ MESSAGES: list[dict] = [
     {
         "text": "Que viva Colombia!",
         "emoji": "🎆🇨🇴🎆",
-        "author": "☀️ Golden Spirit",
+        "author": "no thoughts just colombia",
         "reactions": ["🇨🇴", "🎆", "💛", "💙", "❤️"],
     },
     {
         "text": "Yellow. Blue. Red.",
         "emoji": "💛💙❤️",
-        "author": "🎨 Tricolor Pride",
+        "author": "the colors hit different",
         "reactions": ["💛", "💙", "❤️", "🇨🇴", "✨"],
     },
     {
         "text": "We export more than just coffee ;)",
         "emoji": "☕✨🌎",
-        "author": "☕ Coffee & More",
+        "author": "yes we're that country",
         "reactions": ["☕", "✨", "🌎", "💚", "🇨🇴"],
     },
     {
         "text": "Colombia needs no explanation.",
         "emoji": "🏔️🌊🦜",
-        "author": "🏔️ Pure Pride",
+        "author": "if you know you know",
         "reactions": ["🏔️", "🌊", "🦜", "🇨🇴", "💎"],
     },
     {
         "text": "The tricolor still means something.",
         "emoji": "🇨🇴🔥🇨🇴",
-        "author": "🔥 Forever Proud",
+        "author": "real talk",
         "reactions": ["🇨🇴", "🔥", "💛", "💙", "❤️"],
     },
     {
         "text": "From the Caribbean to the Amazon.",
         "emoji": "🌴🌳🌊",
-        "author": "🌎 Land of Wonder",
+        "author": "try explaining this place",
         "reactions": ["🌴", "🌳", "🌊", "🦜", "🇨🇴"],
     },
 ]
