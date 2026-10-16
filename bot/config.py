@@ -1,14 +1,13 @@
 """
 🇨🇴 Colombia Pride Bot - Configuration
-All configurable settings in one clean place.
+Simple and focused.
 """
 
 import os
 import discord
 from dotenv import load_dotenv
-from datetime import date
 
-# Load environment variables from .env file
+# Load environment variables
 load_dotenv()
 
 # ─── Discord Configuration ───────────────────────────────────────────────────
@@ -17,329 +16,41 @@ BOT_TOKEN: str = os.getenv("DISCORD_BOT_TOKEN", "")
 CHANNEL_ID: int = int(os.getenv("DISCORD_CHANNEL_ID", "0"))
 
 # ─── Colombian Flag Colors ───────────────────────────────────────────────────
-# Official colors of the Colombian flag (Ley 12 de 1967)
-# Using integer constructor for cross-version compatibility
 
 EMBED_COLORS: list[discord.Color] = [
-    discord.Color(0xFCD116),  # Yellow - Sovereignty & Justice
-    discord.Color(0x003893),  # Blue - Loyalty & Perseverance
-    discord.Color(0xCE1126),  # Red - Valor & Blood of Heroes
+    discord.Color(0xFCD116),  # Yellow
+    discord.Color(0x003893),  # Blue
+    discord.Color(0xCE1126),  # Red
 ]
 
-# ─── Base Messages ───────────────────────────────────────────────────────────
-# Expanded with more creative, proud Colombian content
+# ─── Messages ────────────────────────────────────────────────────────────────
 
-BASE_MESSAGES: list[str] = [
-    # Original classics
-    "¡Viva Colombia!",
-    "We export more than just coffee.",
+MESSAGES: list[str] = [
+    "Que viva Colombia!",
     "Yellow. Blue. Red.",
-    
-    # Cultural pride
-    "From the Andes to the Caribbean — Colombia has it all.",
-    "Gabriel García Márquez taught the world to dream in Spanish.",
-    "Shakira, Shakira! Colombia's voice to the world.",
-    "Colombian coffee: liquid gold in a cup.",
-    "Biodiversity? Colombia has 10% of ALL species on Earth.",
-    "Cartagena: where history meets the sea.",
-    "Medellín: City of Eternal Spring.",
-    "Bogotá: the heart that beats at 2,640 meters.",
-    "Colombia: where emeralds are born.",
-    "From salsa to vallenato — our rhythm is infectious.",
-    "Arepas, bandeja paisa, ajiaco — food that feeds the soul.",
-    "Colombia: more flowers than you can imagine.",
-    "The Amazon starts here. So does the magic.",
-    "Colombian warmth: it's in our blood.",
-    "From coffee farms to tech hubs — we're transforming.",
-    "Colombia: where every color has a story.",
-    "Our mountains touch the sky. Our spirit touches hearts.",
-    "Colombia: land of a thousand rhythms.",
-    "From the Pacific to the Caribbean — we embrace both oceans.",
-    "Colombian resilience: forged in fire, shining bright.",
+    "We export more than just coffee ;)",
+    "Colombia needs no explanation.",
+    "The tricolor still means something.",
+    "From the Caribbean to the Amazon.",
 ]
 
-# ─── Emoji Variations ────────────────────────────────────────────────────────
-# Each message gets a random emoji combo to keep things fresh
+# ─── Timing ──────────────────────────────────────────────────────────────────
 
-EMOJI_VARIATIONS: dict[str, list[str]] = {
-    "¡Viva Colombia!": [
-        "🇨🇴 ¡Viva Colombia! 🇨🇴",
-        "🎉 ¡Viva Colombia! 🎊",
-        "🇨🇴✨ ¡Viva Colombia! ✨🇨🇴",
-        "💛💙❤️ ¡Viva Colombia! 💛💙❤️",
-        "🌟 ¡Viva Colombia! 🌟",
-        "🇨🇴🎆 ¡Viva Colombia! 🎆🇨🇴",
-        "🏔️ ¡Viva Colombia! ☕",
-        "🦜 ¡Viva Colombia! 🌺",
-    ],
-    "We export more than just coffee.": [
-        "☕ We export more than just coffee. 🌎",
-        "🌱 We export more than just coffee. 💚",
-        "☕✨ We export more than just coffee. ✨",
-        "🌍 We export more than just coffee. ☕",
-        "💎 We export more than just coffee. 💛",
-        "🌺 We export more than just coffee. 🌿",
-        "☕🇨🇴 We export more than just coffee. 🇨🇴",
-        "🏆 We export more than just coffee. ☕",
-    ],
-    "Yellow. Blue. Red.": [
-        "💛 Yellow. 💙 Blue. ❤️ Red.",
-        "🟡 Yellow. 🔵 Blue. 🔴 Red.",
-        "💛💙❤️ Yellow. Blue. Red. 🇨🇴",
-        "✨ Yellow. Blue. Red. ✨",
-        "🌟 Yellow. 💎 Blue. 🔥 Red.",
-        "🇨🇴 Yellow. Blue. Red. 🇨🇴",
-        "☀️ Yellow. 🌊 Blue. 🌹 Red.",
-        "💫 Yellow. Blue. Red. 💫",
-    ],
-    "From the Andes to the Caribbean — Colombia has it all.": [
-        "🏔️ From the Andes to the Caribbean — Colombia has it all. 🌊",
-        "🌄 From the Andes to the Caribbean — Colombia has it all. 🏖️",
-        "🦅 From the Andes to the Caribbean — Colombia has it all. 🐠",
-    ],
-    "Gabriel García Márquez taught the world to dream in Spanish.": [
-        "📚 Gabriel García Márquez taught the world to dream in Spanish. ✨",
-        "🦋 Gabriel García Márquez taught the world to dream in Spanish. 📖",
-        "🌹 Gabriel García Márquez taught the world to dream in Spanish. 🇨🇴",
-    ],
-    "Shakira, Shakira! Colombia's voice to the world.": [
-        "🎤 Shakira, Shakira! Colombia's voice to the world. 🌟",
-        "💃 Shakira, Shakira! Colombia's voice to the world. 🎶",
-        "🎵 Shakira, Shakira! Colombia's voice to the world. 🇨🇴",
-    ],
-    "Colombian coffee: liquid gold in a cup.": [
-        "☕ Colombian coffee: liquid gold in a cup. ✨",
-        "🌱 Colombian coffee: liquid gold in a cup. 💛",
-        "☕🇨🇴 Colombian coffee: liquid gold in a cup. 🏆",
-    ],
-    "Biodiversity? Colombia has 10% of ALL species on Earth.": [
-        "🦜 Biodiversity? Colombia has 10% of ALL species on Earth. 🌺",
-        "🌿 Biodiversity? Colombia has 10% of ALL species on Earth. 🦋",
-        "🐆 Biodiversity? Colombia has 10% of ALL species on Earth. 🌎",
-    ],
-    "Cartagena: where history meets the sea.": [
-        "🏰 Cartagena: where history meets the sea. 🌊",
-        "🏛️ Cartagena: where history meets the sea. ⚓",
-        "🌅 Cartagena: where history meets the sea. 🇨🇴",
-    ],
-    "Medellín: City of Eternal Spring.": [
-        "🌸 Medellín: City of Eternal Spring. 🌺",
-        "🌷 Medellín: City of Eternal Spring. ☀️",
-        "🏔️ Medellín: City of Eternal Spring. 🌹",
-    ],
-    "Bogotá: the heart that beats at 2,640 meters.": [
-        "🏙️ Bogotá: the heart that beats at 2,640 meters. 💓",
-        "🌆 Bogotá: the heart that beats at 2,640 meters. 🇨🇴",
-        "⛰️ Bogotá: the heart that beats at 2,640 meters. ✨",
-    ],
-    "Colombia: where emeralds are born.": [
-        "💚 Colombia: where emeralds are born. 💎",
-        "✨ Colombia: where emeralds are born. 🇨🇴",
-        "💎 Colombia: where emeralds are born. 🌟",
-    ],
-    "From salsa to vallenato — our rhythm is infectious.": [
-        "💃 From salsa to vallenato — our rhythm is infectious. 🎶",
-        "🎵 From salsa to vallenato — our rhythm is infectious. 🕺",
-        "🎺 From salsa to vallenato — our rhythm is infectious. 🇨🇴",
-    ],
-    "Arepas, bandeja paisa, ajiaco — food that feeds the soul.": [
-        "🫓 Arepas, bandeja paisa, ajiaco — food that feeds the soul. 🍲",
-        "🍽️ Arepas, bandeja paisa, ajiaco — food that feeds the soul. 😋",
-        "🌽 Arepas, bandeja paisa, ajiaco — food that feeds the soul. 🇨🇴",
-    ],
-    "Colombia: more flowers than you can imagine.": [
-        "🌹 Colombia: more flowers than you can imagine. 🌺",
-        "🌸 Colombia: more flowers than you can imagine. 🌷",
-        "💐 Colombia: more flowers than you can imagine. 🌻",
-    ],
-    "The Amazon starts here. So does the magic.": [
-        "🌳 The Amazon starts here. So does the magic. ✨",
-        "🦜 The Amazon starts here. So does the magic. 🌿",
-        "🌲 The Amazon starts here. So does the magic. 🇨🇴",
-    ],
-    "Colombian warmth: it's in our blood.": [
-        "☀️ Colombian warmth: it's in our blood. 💛",
-        "🤗 Colombian warmth: it's in our blood. ❤️",
-        "🌞 Colombian warmth: it's in our blood. 🇨🇴",
-    ],
-    "From coffee farms to tech hubs — we're transforming.": [
-        "☕ From coffee farms to tech hubs — we're transforming. 💻",
-        "🌱 From coffee farms to tech hubs — we're transforming. 🚀",
-        "🇨🇴 From coffee farms to tech hubs — we're transforming. ✨",
-    ],
-    "Colombia: where every color has a story.": [
-        "🎨 Colombia: where every color has a story. 📖",
-        "🌈 Colombia: where every color has a story. 🇨🇴",
-        "✨ Colombia: where every color has a story. 💫",
-    ],
-    "Our mountains touch the sky. Our spirit touches hearts.": [
-        "🏔️ Our mountains touch the sky. Our spirit touches hearts. 💙",
-        "⛰️ Our mountains touch the sky. Our spirit touches hearts. ❤️",
-        "🌄 Our mountains touch the sky. Our spirit touches hearts. 🇨🇴",
-    ],
-    "Colombia: land of a thousand rhythms.": [
-        "🎵 Colombia: land of a thousand rhythms. 💃",
-        "🎶 Colombia: land of a thousand rhythms. 🕺",
-        "🎺 Colombia: land of a thousand rhythms. 🇨🇴",
-    ],
-    "From the Pacific to the Caribbean — we embrace both oceans.": [
-        "🌊 From the Pacific to the Caribbean — we embrace both oceans. 🏖️",
-        "🐋 From the Pacific to the Caribbean — we embrace both oceans. 🇨🇴",
-        "⚓ From the Pacific to the Caribbean — we embrace both oceans. ✨",
-    ],
-    "Colombian resilience: forged in fire, shining bright.": [
-        "🔥 Colombian resilience: forged in fire, shining bright. ✨",
-        "💪 Colombian resilience: forged in fire, shining bright. 🌟",
-        "🇨🇴 Colombian resilience: forged in fire, shining bright. 💛",
-    ],
-}
-
-# ─── Holiday Messages ────────────────────────────────────────────────────────
-# Special messages for Colombian holidays
-
-HOLIDAY_MESSAGES: dict[str, list[str]] = {
-    "new_year": [
-        "🎆🇨🇴 ¡Feliz Año Nuevo, Colombia! 🇨🇴🎆",
-        "✨ New year, same pride. ¡Viva Colombia! 🇨🇴",
-        "🎊 Starting the year with Colombian spirit! 💛💙❤️",
-    ],
-    "independence_day": [
-        "🇨🇴🎆 ¡200+ años de libertad! ¡Viva Colombia! 🎆🇨🇴",
-        "🎉 ¡Feliz Día de la Independencia! We are proud, we are free! 🇨🇴",
-        "💛💙❤️ 20 de Julio — The day Colombia said YES to freedom! 🇨🇴✨",
-        "🏔️ From the Andes to the Caribbean — ¡Viva la Independencia! 🌊",
-    ],
-    "battle_of_boyaca": [
-        "⚔️🇨🇴 ¡7 de Agosto! The battle that sealed our freedom! 🇨🇴",
-        "🏆 Boyacá — Where heroes were born. ¡Viva Colombia! ⚔️",
-    ],
-    "day_of_love_friendship": [
-        "💛💙❤️ Día del Amor y la Amistad — Colombia sends love to the world! 🌍",
-        "🌹 From Colombia with love. ¡Feliz día! 💕",
-    ],
-    "candelaria": [
-        "🕯️✨ ¡Día de las Velitas! Colombia lights up the night! 🌟",
-        "🕯️ Millions of candles, one proud nation. ¡Viva Colombia! 🇨🇴",
-    ],
-    "labor_day": [
-        "💪🇨🇴 ¡Día del Trabajo! Honoring Colombian workers worldwide. 🌟",
-        "☕🌱 From coffee farms to cities — thank you, Colombia! 💛",
-    ],
-    "race_day": [
-        "🌎🇨🇴 Día de la Raza — Celebrating our rich heritage! 🏔️",
-        "✨ Many roots, one nation. ¡Viva la diversidad colombiana! 🌺",
-    ],
-    "cartagena_independence": [
-        "🏰🌊 ¡11 de Noviembre! Cartagena said YES to freedom! 🇨🇴",
-        "🎉 The Heroic City celebrates! ¡Viva Cartagena, viva Colombia! 🏰",
-    ],
-    "immaculate_conception": [
-        "⭐🇨🇴 Día de la Inmaculada — A day of light and tradition. 🕊️",
-        "✨ December 8 — Colombia celebrates with faith and pride. 🙏",
-    ],
-    "christmas": [
-        "🎄🇨🇴 ¡Feliz Navidad desde Colombia! 🎁💛💙❤️",
-        "🌟 Merry Christmas! Colombia sends warmth to the world. 🎄✨",
-    ],
-}
-
-# ─── Colombian Holidays Calendar ─────────────────────────────────────────────
-# (month, day) -> holiday key
-
-COLOMBIAN_HOLIDAYS: dict[tuple[int, int], str] = {
-    (1, 1): "new_year",
-    (1, 6): "epiphany",
-    (3, 19): "saint_joseph",
-    (5, 1): "labor_day",
-    (6, 29): "saints_peter_paul",
-    (7, 20): "independence_day",
-    (8, 7): "battle_of_boyaca",
-    (9, 20): "spring_day",
-    (10, 12): "race_day",
-    (11, 1): "all_saints",
-    (11, 11): "cartagena_independence",
-    (12, 7): "candelaria",
-    (12, 8): "immaculate_conception",
-    (12, 25): "christmas",
-    (12, 31): "new_year_eve",
-}
-
-# ─── Reaction Emojis ─────────────────────────────────────────────────────────
-# Emojis the bot reacts with after sending each message
-
-REACTION_EMOJIS: list[str] = [
-    "🇨🇴",  # Colombian flag
-    "💛",    # Yellow heart
-    "💙",    # Blue heart
-    "❤️",    # Red heart
-    "☕",    # Coffee
-    "🌺",    # Flower
-    "🎉",    # Party
-    "✨",    # Sparkles
-    "🌟",    # Star
-    "🏔️",    # Mountain (Andes)
-    "🦜",    # Parrot (Colombian wildlife)
-    "🌊",    # Ocean (Caribbean/Pacific)
-]
-
-# How many reactions to add per message (random range)
-MIN_REACTIONS: int = 3
-MAX_REACTIONS: int = 5
-
-# ─── Messages (Combined) ─────────────────────────────────────────────────────
-
-MESSAGES: list[str] = BASE_MESSAGES
-
-# ─── Timing Configuration ────────────────────────────────────────────────────
-
-CYCLE_DURATION_HOURS: int = 5
 MIN_GAP_MINUTES: int = 25
 MAX_GAP_MINUTES: int = 40
 
-# ─── Footer Messages ─────────────────────────────────────────────────────────
+# ─── Footer ──────────────────────────────────────────────────────────────────
 
-FOOTERS: list[str] = [
-    "🇨🇴 República de Colombia",
-    "🇨🇴 Orgullo Colombiano",
-    "🇨🇴 Hecho con amor en Colombia",
-    "🇨🇴 Tierra de mil colores",
-    "🇨🇴 El riesgo es que te quieras quedar",
-    "🇨🇴 Desde las montañas hasta el mar",
-    "🇨🇴 Biodiversidad que enamora",
-    "🇨🇴 Sabor, ritmo y corazón",
-]
-
-# ─── Holiday Footer Messages ─────────────────────────────────────────────────
-
-HOLIDAY_FOOTERS: list[str] = [
-    "🇨🇴 ¡Celebrando con orgullo!",
-    "🇨🇴✨ Día especial para Colombia",
-    "🎉🇨🇴 ¡Que viva la fiesta!",
-    "🇨🇴🎊 Celebración colombiana",
-]
+FOOTER: str = "🇨🇴 Colombia"
 
 # ─── Validation ──────────────────────────────────────────────────────────────
 
 def validate_config() -> bool:
-    """Validate that all required configuration is present."""
-    errors = []
-
+    """Validate required configuration."""
     if not BOT_TOKEN:
-        errors.append("DISCORD_BOT_TOKEN is not set")
-
-    if not CHANNEL_ID or CHANNEL_ID == 0:
-        errors.append("DISCORD_CHANNEL_ID is not set")
-
-    if errors:
-        for error in errors:
-            print(f"❌ Configuration Error: {error}")
-        print("\n📝 Please check your .env file. See .env.example for reference.")
+        print("❌ DISCORD_BOT_TOKEN is not set")
         return False
-
+    if not CHANNEL_ID:
+        print("❌ DISCORD_CHANNEL_ID is not set")
+        return False
     return True
-
-
-def get_todays_holiday() -> str | None:
-    """Check if today is a Colombian holiday."""
-    today = date.today()
-    return COLOMBIAN_HOLIDAYS.get((today.month, today.day))

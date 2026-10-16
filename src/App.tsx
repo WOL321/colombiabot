@@ -6,16 +6,20 @@ const COLORS = {
   red: '#CE1126',
 };
 
+const MESSAGES = [
+  'Que viva Colombia!',
+  'Yellow. Blue. Red.',
+  'We export more than just coffee ;)',
+  'Colombia needs no explanation.',
+  'The tricolor still means something.',
+  'From the Caribbean to the Amazon.',
+];
+
 function App() {
   const [currentColor, setCurrentColor] = useState(0);
-  const [embedPreview, setEmbedPreview] = useState(0);
+  const [currentMessage, setCurrentMessage] = useState(0);
 
   const colors = [COLORS.yellow, COLORS.blue, COLORS.red];
-  const messages = [
-    '🇨🇴 ¡Viva Colombia! 🇨🇴',
-    '☕ Colombian coffee: liquid gold in a cup. ✨',
-    '🦜 Biodiversity? Colombia has 10% of ALL species on Earth.',
-  ];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -26,7 +30,7 @@ function App() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setEmbedPreview((prev) => (prev + 1) % 3);
+      setCurrentMessage((prev) => (prev + 1) % MESSAGES.length);
     }, 4000);
     return () => clearInterval(interval);
   }, []);
@@ -35,7 +39,7 @@ function App() {
     <div className="min-h-screen bg-[#0a0a0f] text-white">
       {/* Hero */}
       <section className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden">
-        {/* Animated background blobs */}
+        {/* Animated background */}
         <div className="absolute inset-0">
           <div
             className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full opacity-20 blur-3xl transition-colors duration-1000"
@@ -68,22 +72,37 @@ function App() {
           </h1>
 
           <p className="text-xl text-gray-400 mb-12 max-w-xl mx-auto">
-            A Discord bot that celebrates Colombia with style.
+            A simple Discord bot that celebrates Colombia with style.
           </p>
 
           {/* Live embed preview */}
           <div className="max-w-md mx-auto">
             <DiscordEmbed
-              message={messages[embedPreview]}
-              color={colors[embedPreview]}
-              index={embedPreview}
+              message={MESSAGES[currentMessage]}
+              color={colors[currentMessage % 3]}
             />
           </div>
         </div>
       </section>
 
-      {/* What it does */}
+      {/* Messages */}
       <section className="py-32 px-6">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-4xl font-bold mb-16 text-center">The messages</h2>
+          
+          <div className="space-y-6">
+            {MESSAGES.map((message, index) => (
+              <div key={index} className="flex items-center gap-4 p-6 rounded-xl bg-white/[0.02] border border-white/5">
+                <div className="text-2xl">🇨🇴</div>
+                <div className="text-lg">{message}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="py-32 px-6 bg-white/[0.02]">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-4xl font-bold mb-16 text-center">What it does</h2>
           
@@ -92,23 +111,15 @@ function App() {
               <div className="text-4xl">✨</div>
               <div>
                 <h3 className="text-xl font-semibold mb-2">Beautiful embeds</h3>
-                <p className="text-gray-400">Every message is wrapped in a premium embed with Colombian flag colors.</p>
-              </div>
-            </div>
-
-            <div className="flex gap-6">
-              <div className="text-4xl">🎉</div>
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Holiday detection</h3>
-                <p className="text-gray-400">Special celebration embeds on Colombian holidays like July 20th and Christmas.</p>
+                <p className="text-gray-400">Every message wrapped in a clean embed with Colombian flag colors.</p>
               </div>
             </div>
 
             <div className="flex gap-6">
               <div className="text-4xl">🇨🇴</div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">Auto reactions</h3>
-                <p className="text-gray-400">Every message gets 3-5 random Colombian emoji reactions.</p>
+                <h3 className="text-xl font-semibold mb-2">Emoji reactions</h3>
+                <p className="text-gray-400">Each message gets 2-4 random reactions: 🇨🇴 💛 💙 ❤️</p>
               </div>
             </div>
 
@@ -119,22 +130,14 @@ function App() {
                 <p className="text-gray-400">Messages every 25-40 minutes. Never spammy, always organic.</p>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Commands */}
-      <section className="py-32 px-6 bg-white/[0.02]">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-4xl font-bold mb-16 text-center">Commands</h2>
-          
-          <div className="grid md:grid-cols-2 gap-6">
-            <CommandCard icon="💡" name="!fact" desc="Random Colombian fact" />
-            <CommandCard icon="💭" name="!quote" desc="Inspirational quote" />
-            <CommandCard icon="🏳️" name="!flag" desc="Show the flag" />
-            <CommandCard icon="🎨" name="!color" desc="Random flag color" />
-            <CommandCard icon="😄" name="!emoji" desc="Colombian emojis" />
-            <CommandCard icon="📝" name="!message" desc="Random pride message" />
+            <div className="flex gap-6">
+              <div className="text-4xl">💯</div>
+              <div>
+                <h3 className="text-xl font-semibold mb-2">Simple & focused</h3>
+                <p className="text-gray-400">Just the messages. No bloat. No complexity.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -144,7 +147,7 @@ function App() {
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-8">Get started</h2>
           <p className="text-gray-400 mb-12 text-lg">
-            Free, open source, runs on GitHub Actions.
+            Free. Open source. Runs on GitHub Actions.
           </p>
           
           <a
@@ -179,14 +182,10 @@ function App() {
   );
 }
 
-function DiscordEmbed({ message, color, index }: {
+function DiscordEmbed({ message, color }: {
   message: string;
   color: string;
-  index: number;
 }) {
-  const authors = ['☀️ Golden Spirit', '🌊 Deep Blue Ocean', '🌹 Passionate Red'];
-  const footers = ['🇨🇴 República de Colombia', '🇨🇴 Orgullo Colombiano', '🇨🇴 Tierra de mil colores'];
-
   return (
     <div className="bg-[#2b2d31] rounded-lg p-4 border-l-4" style={{ borderLeftColor: color }}>
       <div className="flex items-center gap-2 mb-3">
@@ -200,27 +199,16 @@ function DiscordEmbed({ message, color, index }: {
         </div>
       </div>
       <div className="ml-10">
-        <div className="text-xs font-semibold mb-2" style={{ color }}>{authors[index]}</div>
         <div className="bg-[#1e1f22] rounded-lg p-3 border-l-2" style={{ borderLeftColor: color }}>
           <p className="text-white text-sm">{message}</p>
         </div>
-        <div className="text-xs text-gray-500 mt-2">{footers[index]}</div>
+        <div className="text-xs text-gray-500 mt-2">🇨🇴 Colombia</div>
         <div className="flex gap-2 mt-2">
           <span className="text-xs px-2 py-1 rounded-full bg-[#2b2d31] border border-white/10">🇨🇴 1</span>
           <span className="text-xs px-2 py-1 rounded-full bg-[#2b2d31] border border-white/10">💛 1</span>
-          <span className="text-xs px-2 py-1 rounded-full bg-[#2b2d31] border border-white/10">✨ 1</span>
+          <span className="text-xs px-2 py-1 rounded-full bg-[#2b2d31] border border-white/10">❤️ 1</span>
         </div>
       </div>
-    </div>
-  );
-}
-
-function CommandCard({ icon, name, desc }: { icon: string; name: string; desc: string }) {
-  return (
-    <div className="p-6 rounded-xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-all">
-      <div className="text-3xl mb-3">{icon}</div>
-      <div className="font-mono text-sm mb-2" style={{ color: COLORS.yellow }}>{name}</div>
-      <div className="text-gray-400 text-sm">{desc}</div>
     </div>
   );
 }
