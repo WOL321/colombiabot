@@ -23,15 +23,45 @@ EMBED_COLORS: list[discord.Color] = [
     discord.Color(0xCE1126),  # Red
 ]
 
-# ─── Messages ────────────────────────────────────────────────────────────────
+# ─── Messages with Emoji Styles ──────────────────────────────────────────────
 
-MESSAGES: list[str] = [
-    "Que viva Colombia!",
-    "Yellow. Blue. Red.",
-    "We export more than just coffee ;)",
-    "Colombia needs no explanation.",
-    "The tricolor still means something.",
-    "From the Caribbean to the Amazon.",
+MESSAGES: list[dict] = [
+    {
+        "text": "Que viva Colombia!",
+        "emoji": "🎆🇨🇴🎆",
+        "author": "☀️ Golden Spirit",
+        "reactions": ["🇨🇴", "🎆", "💛", "💙", "❤️"],
+    },
+    {
+        "text": "Yellow. Blue. Red.",
+        "emoji": "💛💙❤️",
+        "author": "🎨 Tricolor Pride",
+        "reactions": ["💛", "💙", "❤️", "🇨🇴", "✨"],
+    },
+    {
+        "text": "We export more than just coffee ;)",
+        "emoji": "☕✨🌎",
+        "author": "☕ Coffee & More",
+        "reactions": ["☕", "✨", "🌎", "💚", "🇨🇴"],
+    },
+    {
+        "text": "Colombia needs no explanation.",
+        "emoji": "🏔️🌊🦜",
+        "author": "🏔️ Pure Pride",
+        "reactions": ["🏔️", "🌊", "🦜", "🇨🇴", "💎"],
+    },
+    {
+        "text": "The tricolor still means something.",
+        "emoji": "🇨🇴🔥🇨🇴",
+        "author": "🔥 Forever Proud",
+        "reactions": ["🇨🇴", "🔥", "💛", "💙", "❤️"],
+    },
+    {
+        "text": "From the Caribbean to the Amazon.",
+        "emoji": "🌴🌳🌊",
+        "author": "🌎 Land of Wonder",
+        "reactions": ["🌴", "🌳", "🌊", "🦜", "🇨🇴"],
+    },
 ]
 
 # ─── Timing ──────────────────────────────────────────────────────────────────

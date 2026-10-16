@@ -7,12 +7,12 @@ const COLORS = {
 };
 
 const MESSAGES = [
-  'Que viva Colombia!',
-  'Yellow. Blue. Red.',
-  'We export more than just coffee ;)',
-  'Colombia needs no explanation.',
-  'The tricolor still means something.',
-  'From the Caribbean to the Amazon.',
+  { text: 'Que viva Colombia!', emoji: '🎆🇨🇴🎆', author: '☀️ Golden Spirit', reactions: ['🇨🇴', '🎆', '💛', '💙', '❤️'] },
+  { text: 'Yellow. Blue. Red.', emoji: '💛💙❤️', author: '🎨 Tricolor Pride', reactions: ['💛', '💙', '❤️', '🇨🇴', '✨'] },
+  { text: 'We export more than just coffee ;)', emoji: '☕✨🌎', author: '☕ Coffee & More', reactions: ['☕', '✨', '🌎', '💚', '🇨🇴'] },
+  { text: 'Colombia needs no explanation.', emoji: '🏔️🌊🦜', author: '🏔️ Pure Pride', reactions: ['🏔️', '🌊', '🦜', '🇨🇴', '💎'] },
+  { text: 'The tricolor still means something.', emoji: '🇨🇴🔥🇨🇴', author: '🔥 Forever Proud', reactions: ['🇨🇴', '🔥', '💛', '💙', '❤️'] },
+  { text: 'From the Caribbean to the Amazon.', emoji: '🌴🌳🌊', author: '🌎 Land of Wonder', reactions: ['🌴', '🌳', '🌊', '🦜', '🇨🇴'] },
 ];
 
 function App() {
@@ -93,8 +93,8 @@ function App() {
           <div className="space-y-6">
             {MESSAGES.map((message, index) => (
               <div key={index} className="flex items-center gap-4 p-6 rounded-xl bg-white/[0.02] border border-white/5">
-                <div className="text-2xl">🇨🇴</div>
-                <div className="text-lg">{message}</div>
+                <div className="text-2xl">{message.emoji}</div>
+                <div className="text-lg">{message.text}</div>
               </div>
             ))}
           </div>
@@ -111,15 +111,15 @@ function App() {
               <div className="text-4xl">✨</div>
               <div>
                 <h3 className="text-xl font-semibold mb-2">Beautiful embeds</h3>
-                <p className="text-gray-400">Every message wrapped in a clean embed with Colombian flag colors.</p>
+                <p className="text-gray-400">Every message wrapped in a clean embed with Colombian flag colors and themed emojis.</p>
               </div>
             </div>
 
             <div className="flex gap-6">
               <div className="text-4xl">🇨🇴</div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">Emoji reactions</h3>
-                <p className="text-gray-400">Each message gets 2-4 random reactions: 🇨🇴 💛 💙 ❤️</p>
+                <h3 className="text-xl font-semibold mb-2">Cool reactions</h3>
+                <p className="text-gray-400">Each message gets 3-5 themed emoji reactions that match the vibe.</p>
               </div>
             </div>
 
@@ -183,7 +183,7 @@ function App() {
 }
 
 function DiscordEmbed({ message, color }: {
-  message: string;
+  message: typeof MESSAGES[0];
   color: string;
 }) {
   return (
@@ -199,14 +199,23 @@ function DiscordEmbed({ message, color }: {
         </div>
       </div>
       <div className="ml-10">
+        <div className="text-xs font-semibold mb-2" style={{ color }}>{message.author}</div>
         <div className="bg-[#1e1f22] rounded-lg p-3 border-l-2" style={{ borderLeftColor: color }}>
-          <p className="text-white text-sm">{message}</p>
+          <p className="text-white text-sm text-center">
+            <span className="text-lg">{message.emoji}</span>
+            <br />
+            <strong>{message.text}</strong>
+            <br />
+            <span className="text-lg">{message.emoji}</span>
+          </p>
         </div>
         <div className="text-xs text-gray-500 mt-2">🇨🇴 Colombia</div>
-        <div className="flex gap-2 mt-2">
-          <span className="text-xs px-2 py-1 rounded-full bg-[#2b2d31] border border-white/10">🇨🇴 1</span>
-          <span className="text-xs px-2 py-1 rounded-full bg-[#2b2d31] border border-white/10">💛 1</span>
-          <span className="text-xs px-2 py-1 rounded-full bg-[#2b2d31] border border-white/10">❤️ 1</span>
+        <div className="flex gap-2 mt-2 flex-wrap">
+          {message.reactions.slice(0, 4).map((emoji, i) => (
+            <span key={i} className="text-xs px-2 py-1 rounded-full bg-[#2b2d31] border border-white/10">
+              {emoji} 1
+            </span>
+          ))}
         </div>
       </div>
     </div>

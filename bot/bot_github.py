@@ -48,25 +48,38 @@ messages_sent = 0
 
 # ─── Embed Builder ───────────────────────────────────────────────────────────
 
-def create_embed(message: str) -> discord.Embed:
-    """Creates a clean, elegant embed with Colombian flag colors."""
+def create_embed(message_data: dict) -> discord.Embed:
+    """Creates a beautiful, premium embed with Colombian flag colors."""
     color = random.choice(EMBED_COLORS)
     
+    # Format message with emoji decoration
+    emoji = message_data["emoji"]
+    text = message_data["text"]
+    author = message_data["author"]
+    
+    # Create the full message with emojis
+    full_message = f"{emoji}\n**{text}**\n{emoji}"
+    
     embed = discord.Embed(
-        description=message,
+        description=full_message,
         color=color,
         timestamp=datetime.utcnow(),
     )
+    
+    # Add themed author
+    embed.set_author(name=author)
+    
+    # Add footer
     embed.set_footer(text=FOOTER)
     
     return embed
 
 
-async def add_reactions(message: discord.Message):
-    """Adds emoji reactions to a sent message."""
-    reactions = ["🇨🇴", "💛", "💙", "❤️"]
-    num_reactions = random.randint(2, 4)
-    selected = random.sample(reactions, num_reactions)
+async def add_reactions(message: discord.Message, reactions: list):
+    """Adds themed emoji reactions to a sent message."""
+    # Pick 3-5 reactions from the message's reaction pool
+    num_reactions = random.randint(3, 5)
+    selected = random.sample(reactions, min(num_reactions, len(reactions)))
     
     for emoji in selected:
         try:
@@ -91,19 +104,19 @@ async def send_message():
             logger.error(f"Cannot access channel: {e}")
             return
 
-    # Get random message
-    message = random.choice(MESSAGES)
+    # Get random message with its style
+    message_data = random.choice(MESSAGES)
     
     # Create and send embed
-    embed = create_embed(message)
+    embed = create_embed(message_data)
 
     try:
         sent_message = await channel.send(embed=embed)
         messages_sent += 1
-        logger.info(f"✨ Sent: {message}")
+        logger.info(f"✨ Sent: {message_data['text']}")
 
-        # Add reactions
-        await add_reactions(sent_message)
+        # Add themed reactions
+        await add_reactions(sent_message, message_data["reactions"])
         logger.info(f"✅ Added reactions")
 
     except Exception as e:
