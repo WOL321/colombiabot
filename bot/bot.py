@@ -49,27 +49,16 @@ messages_sent = 0
 # ─── Embed Builder ───────────────────────────────────────────────────────────
 
 def create_embed(message_data: dict) -> discord.Embed:
-    """Creates a beautiful, premium embed with Colombian flag colors."""
+    """Creates a clean embed with Colombian flag colors."""
     color = random.choice(EMBED_COLORS)
-    
-    # Format message with emoji decoration
-    emoji = message_data["emoji"]
+    accent = message_data["accent"]
     text = message_data["text"]
-    author = message_data["author"]
-    
-    # Create the full message with emojis
-    full_message = f"{emoji}\n**{text}**\n{emoji}"
     
     embed = discord.Embed(
-        description=full_message,
+        description=f"{accent} {text}",
         color=color,
         timestamp=datetime.utcnow(),
     )
-    
-    # Add themed author
-    embed.set_author(name=author)
-    
-    # Add footer
     embed.set_footer(text=FOOTER)
     
     return embed

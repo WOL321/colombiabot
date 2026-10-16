@@ -1,6 +1,5 @@
 """
 🇨🇴 Colombia Pride Bot - GitHub Actions Version
-Simple, focused, elegant.
 """
 
 import os
@@ -23,14 +22,11 @@ from config import (
     FOOTER,
 )
 
-# Logging
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
 )
 logger = logging.getLogger("colombia_bot")
-
-# ─── Bot Setup ───────────────────────────────────────────────────────────────
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -42,42 +38,27 @@ bot = commands.Bot(
     help_command=None,
 )
 
-# Track stats
 messages_sent = 0
 
 
-# ─── Embed Builder ───────────────────────────────────────────────────────────
-
 def create_embed(message_data: dict) -> discord.Embed:
-    """Creates a beautiful, premium embed with Colombian flag colors."""
+    """Creates a clean embed with Colombian flag colors."""
     color = random.choice(EMBED_COLORS)
-    
-    # Format message with emoji decoration
-    emoji = message_data["emoji"]
+    accent = message_data["accent"]
     text = message_data["text"]
-    author = message_data["author"]
-    
-    # Create the full message with emojis
-    full_message = f"{emoji}\n**{text}**\n{emoji}"
     
     embed = discord.Embed(
-        description=full_message,
+        description=f"{accent} {text}",
         color=color,
         timestamp=datetime.utcnow(),
     )
-    
-    # Add themed author
-    embed.set_author(name=author)
-    
-    # Add footer
     embed.set_footer(text=FOOTER)
     
     return embed
 
 
 async def add_reactions(message: discord.Message, reactions: list):
-    """Adds themed emoji reactions to a sent message."""
-    # Pick 3-5 reactions from the message's reaction pool
+    """Adds emoji reactions to a sent message."""
     num_reactions = random.randint(3, 5)
     selected = random.sample(reactions, min(num_reactions, len(reactions)))
     
@@ -104,10 +85,7 @@ async def send_message():
             logger.error(f"Cannot access channel: {e}")
             return
 
-    # Get random message with its style
     message_data = random.choice(MESSAGES)
-    
-    # Create and send embed
     embed = create_embed(message_data)
 
     try:
@@ -115,15 +93,12 @@ async def send_message():
         messages_sent += 1
         logger.info(f"✨ Sent: {message_data['text']}")
 
-        # Add themed reactions
         await add_reactions(sent_message, message_data["reactions"])
         logger.info(f"✅ Added reactions")
 
     except Exception as e:
         logger.error(f"❌ Failed to send: {e}")
 
-
-# ─── Commands ────────────────────────────────────────────────────────────────
 
 @bot.command(name="ping", aliases=["status"])
 async def ping(ctx):
@@ -142,8 +117,6 @@ async def ping(ctx):
     await ctx.send(embed=embed)
 
 
-# ─── Bot Events ──────────────────────────────────────────────────────────────
-
 @bot.event
 async def on_ready():
     """Called when bot connects to Discord."""
@@ -157,14 +130,12 @@ async def on_ready():
         status=discord.Status.online,
     )
 
-    # Send a message (80% chance)
     if random.random() < 0.80:
         await asyncio.sleep(random.uniform(3, 10))
         await send_message()
     else:
         logger.info("💤 Skipping message this session")
 
-    # Stay online for 2 minutes
     logger.info("👂 Listening for commands for 2 minutes...")
     await asyncio.sleep(120)
 
@@ -179,8 +150,6 @@ async def on_command_error(ctx, error):
         return
     logger.error(f"Command error: {error}")
 
-
-# ─── Entry Point ─────────────────────────────────────────────────────────────
 
 def main():
     """Main entry point."""

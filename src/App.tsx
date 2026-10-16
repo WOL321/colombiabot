@@ -7,12 +7,12 @@ const COLORS = {
 };
 
 const MESSAGES = [
-  { text: 'Que viva Colombia!', emoji: '🎆🇨🇴🎆', author: 'no thoughts just colombia', reactions: ['🇨🇴', '🎆', '💛', '💙', '❤️'] },
-  { text: 'Yellow. Blue. Red.', emoji: '💛💙❤️', author: 'the colors hit different', reactions: ['💛', '💙', '❤️', '🇨🇴', '✨'] },
-  { text: 'We export more than just coffee ;)', emoji: '☕✨🌎', author: 'yes we\'re that country', reactions: ['☕', '✨', '🌎', '💚', '🇨🇴'] },
-  { text: 'Colombia needs no explanation.', emoji: '🏔️🌊🦜', author: 'if you know you know', reactions: ['🏔️', '🌊', '🦜', '🇨🇴', '💎'] },
-  { text: 'The tricolor still means something.', emoji: '🇨🇴🔥🇨🇴', author: 'real talk', reactions: ['🇨🇴', '🔥', '💛', '💙', '❤️'] },
-  { text: 'From the Caribbean to the Amazon.', emoji: '🌴🌳🌊', author: 'try explaining this place', reactions: ['🌴', '🌳', '🌊', '🦜', '🇨🇴'] },
+  { text: 'Que viva Colombia!', accent: '🇨🇴', reactions: ['🇨🇴', '🎆', '💛', '💙', '❤️'] },
+  { text: 'Yellow. Blue. Red.', accent: '💛💙❤️', reactions: ['💛', '💙', '❤️', '🇨🇴'] },
+  { text: 'We export more than just coffee ;)', accent: '☕', reactions: ['☕', '✨', '🇨🇴', '💚'] },
+  { text: 'Colombia needs no explanation.', accent: '🏔️', reactions: ['🏔️', '🌊', '🦜', '🇨🇴'] },
+  { text: 'The tricolor still means something.', accent: '🔥', reactions: ['🇨🇴', '🔥', '💛', '💙', '❤️'] },
+  { text: 'From the Caribbean to the Amazon.', accent: '🌴', reactions: ['🌴', '🌊', '🦜', '🇨🇴'] },
 ];
 
 function App() {
@@ -93,7 +93,7 @@ function App() {
           <div className="space-y-6">
             {MESSAGES.map((message, index) => (
               <div key={index} className="flex items-center gap-4 p-6 rounded-xl bg-white/[0.02] border border-white/5">
-                <div className="text-2xl">{message.emoji}</div>
+                <div className="text-2xl">{message.accent}</div>
                 <div className="text-lg">{message.text}</div>
               </div>
             ))}
@@ -199,14 +199,9 @@ function DiscordEmbed({ message, color }: {
         </div>
       </div>
       <div className="ml-10">
-        <div className="text-xs font-semibold mb-2" style={{ color }}>{message.author}</div>
         <div className="bg-[#1e1f22] rounded-lg p-3 border-l-2" style={{ borderLeftColor: color }}>
-          <p className="text-white text-sm text-center">
-            <span className="text-lg">{message.emoji}</span>
-            <br />
-            <strong>{message.text}</strong>
-            <br />
-            <span className="text-lg">{message.emoji}</span>
+          <p className="text-white text-sm">
+            {message.accent} {message.text}
           </p>
         </div>
         <div className="text-xs text-gray-500 mt-2">🇨🇴 Colombia</div>
