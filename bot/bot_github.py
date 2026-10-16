@@ -13,6 +13,7 @@ from datetime import datetime
 
 import discord
 from discord.ext import commands
+from discord import app_commands
 
 from config import (
     BOT_TOKEN,
@@ -231,22 +232,256 @@ async def help_cmd(ctx):
     """Show available commands."""
     embed = discord.Embed(
         title="🇨🇴 Colombia Pride Bot - Commands",
-        description="Celebrating Colombia with elegance and pride!",
+        description="Celebrating Colombia with elegance and pride!\n\n**Slash Commands (/):**\n`/citizens` - View all citizens\n`/towns` - View all towns\n`/leadership` - View kingdom leadership\n`/stats` - View kingdom statistics\n`/player <name>` - Search for a player\n\n**Prefix Commands (!):**\n`!ping` - Check bot status\n`!stats` - View statistics\n`!holidays` - See Colombian holidays\n`!fact` - Random Colombian fact\n`!quote` - Inspirational Colombian quote\n`!flag` - Show the Colombian flag\n`!color` - Random flag color with meaning\n`!emoji` - Random Colombian emoji\n`!message` - Random pride message\n`!help` - Show this message",
         color=discord.Color(0x003893),
         timestamp=datetime.utcnow(),
     )
-    embed.add_field(name="`!ping`", value="Check bot status", inline=False)
-    embed.add_field(name="`!stats`", value="View statistics", inline=False)
-    embed.add_field(name="`!holidays`", value="See Colombian holidays", inline=False)
-    embed.add_field(name="`!fact`", value="Random Colombian fact", inline=False)
-    embed.add_field(name="`!quote`", value="Inspirational Colombian quote", inline=False)
-    embed.add_field(name="`!flag`", value="Show the Colombian flag", inline=False)
-    embed.add_field(name="`!color`", value="Random flag color with meaning", inline=False)
-    embed.add_field(name="`!emoji`", value="Random Colombian emoji", inline=False)
-    embed.add_field(name="`!message`", value="Random pride message", inline=False)
-    embed.add_field(name="`!help`", value="Show this message", inline=False)
-    embed.set_footer(text="🇨🇴 República de Colombia")
+    embed.set_footer(text="🇨🇴 Reino de Colombia · DiplomaticaMC")
     await ctx.send(embed=embed)
+
+
+# ─── Slash Commands (Kingdom Data) ───────────────────────────────────────────
+
+@bot.tree.command(name="citizens", description="View citizens of the Reino de Colombia")
+async def slash_citizens(interaction: discord.Interaction):
+    """Show all citizens from the kingdom."""
+    await interaction.response.defer()
+    
+    # This data would normally be fetched from your website API
+    # For now, using sample data structure
+    embed = discord.Embed(
+        title="👥 Citizens of the Reino de Colombia",
+        description="**577 citizens** across **34 towns**\n\nVisit [colombiadmc.site](https://colombiadmc.site) for the full directory!",
+        color=discord.Color(0xFCD116),
+        timestamp=datetime.utcnow(),
+    )
+    
+    embed.add_field(
+        name="👑 The Crown",
+        value="• **9_88** - King of Colombia\n• **OliveTree316** - Prime Minister",
+        inline=False
+    )
+    
+    embed.add_field(
+        name="🏛️ The Cabinet",
+        value="• **Novum_Vetus** - Min. of Foreign & Internal Affairs\n• **Crowlia** - Min. of Defense\n• **qulipzz** - Min. of Justice and Law\n• **pato541** - Min. of Culture",
+        inline=False
+    )
+    
+    embed.add_field(
+        name="📊 Statistics",
+        value="• Total Citizens: **577**\n• Total Towns: **34**\n• Capital: **Maicao**",
+        inline=False
+    )
+    
+    embed.set_thumbnail(url="https://colombiadmc.site/assets/escudo.png")
+    embed.set_footer(text="🇨🇴 Reino de Colombia · DiplomaticaMC")
+    
+    await interaction.followup.send(embed=embed)
+
+
+@bot.tree.command(name="towns", description="View all towns in the Reino de Colombia")
+async def slash_towns(interaction: discord.Interaction):
+    """Show all towns from the kingdom."""
+    await interaction.response.defer()
+    
+    embed = discord.Embed(
+        title="🏘️ Towns of the Reino de Colombia",
+        description="**34 imperial towns** across the empire\n\nVisit [colombiadmc.site](https://colombiadmc.site/#citizens) for the full list!",
+        color=discord.Color(0x003893),
+        timestamp=datetime.utcnow(),
+    )
+    
+    # Sample towns
+    towns = [
+        ("Maicao", "12 residents", "🏛️ Capital"),
+        ("Tegucigalpa", "6 residents", "🌎 Central America"),
+        ("Santa Maria", "4 residents", "🏔️ Andes Region"),
+        ("George Town", "3 residents", "🏝️ Caribbean"),
+        ("Guatemala", "3 residents", "🌎 Central America"),
+        ("Medellin Antioquia", "2 residents", "🏔️ Colombian Region"),
+        ("Iza", "2 residents", "🏔️ Colombian Region"),
+        ("Goiania", "2 residents", "🌿 South America"),
+        ("El Estrella", "2 residents", "🏔️ Colombian Region"),
+        ("Canollia", "2 residents", "🌿 South America"),
+        ("Paramaribo", "2 residents", "🌿 South America"),
+    ]
+    
+    town_list = "\n".join([f"• **{name}** - {residents} {tag}" for name, residents, tag in towns])
+    
+    embed.add_field(
+        name="🏘️ Major Towns",
+        value=town_list,
+        inline=False
+    )
+    
+    embed.add_field(
+        name="📊 More Towns",
+        value="Aldama, Bismuna Tara, Cabada Vera, Cali, Caracas, Cordoba, Dominican Republic, El Salvador, Esteli, Golopigi, Guatape, Intuto, Jardin, Managua, Mexico City, New Bahamas, Panama, Puerto Lempira, Quito, Santa Ana, Santa Marta, Trinidad, Zircon",
+        inline=False
+    )
+    
+    embed.set_thumbnail(url="https://colombiadmc.site/assets/escudo.png")
+    embed.set_footer(text="🇨🇴 Reino de Colombia · DiplomaticaMC")
+    
+    await interaction.followup.send(embed=embed)
+
+
+@bot.tree.command(name="leadership", description="View the leadership of the Reino de Colombia")
+async def slash_leadership(interaction: discord.Interaction):
+    """Show the kingdom's leadership."""
+    await interaction.response.defer()
+    
+    embed = discord.Embed(
+        title="👑 Leadership of the Reino de Colombia",
+        description="The Crown and Cabinet that guide the empire",
+        color=discord.Color(0xCE1126),
+        timestamp=datetime.utcnow(),
+    )
+    
+    # The Crown
+    embed.add_field(
+        name="👑 The Crown",
+        value=(
+            "**King of Colombia**\n"
+            "![9_88](https://mc-heads.net/avatar/9_88/64) **9_88**\n"
+            "Founder of the Empire and sovereign of the Caribbean seat.\n\n"
+            "**Prime Minister**\n"
+            "![OliveTree316](https://mc-heads.net/avatar/OliveTree316/64) **OliveTree316**\n"
+            "Runs day-to-day government, based in Medellín Antioquia."
+        ),
+        inline=False
+    )
+    
+    # The Cabinet
+    embed.add_field(
+        name="🏛️ The Cabinet",
+        value=(
+            "🌎 **Min. of Foreign & Internal Affairs**\n"
+            "![Novum_Vetus](https://mc-heads.net/avatar/Novum_Vetus/64) **Novum_Vetus**\n\n"
+            "🛡️ **Min. of Defense**\n"
+            "![Crowlia](https://mc-heads.net/avatar/Crowlia/64) **Crowlia**\n\n"
+            "⚖️ **Min. of Justice and Law**\n"
+            "![qulipzz](https://mc-heads.net/avatar/qulipzz/64) **qulipzz**\n\n"
+            "🎨 **Min. of Culture**\n"
+            "![pato541](https://mc-heads.net/avatar/pato541/64) **pato541**"
+        ),
+        inline=False
+    )
+    
+    embed.set_thumbnail(url="https://colombiadmc.site/assets/escudo.png")
+    embed.set_footer(text="🇨🇴 Plus Ultra, further beyond")
+    
+    await interaction.followup.send(embed=embed)
+
+
+@bot.tree.command(name="kingdom", description="View kingdom statistics")
+async def slash_kingdom(interaction: discord.Interaction):
+    """Show kingdom statistics."""
+    await interaction.response.defer()
+    
+    embed = discord.Embed(
+        title="📊 Kingdom Statistics",
+        description="Reino de Colombia · DiplomaticaMC",
+        color=discord.Color(0xFCD116),
+        timestamp=datetime.utcnow(),
+    )
+    
+    embed.add_field(
+        name="👥 Population",
+        value="**577** citizens",
+        inline=True
+    )
+    
+    embed.add_field(
+        name="🏘️ Towns",
+        value="**34** imperial towns",
+        inline=True
+    )
+    
+    embed.add_field(
+        name="🏛️ Leadership",
+        value="**1** King\n**1** Prime Minister\n**5** Cabinet Ministers",
+        inline=True
+    )
+    
+    embed.add_field(
+        name="🏛️ Capital",
+        value="**Maicao**\nMain claim on the water",
+        inline=True
+    )
+    
+    embed.add_field(
+        name="🌎 Regions",
+        value="• Colombian Region\n• Central America\n• Caribbean\n• South America",
+        inline=True
+    )
+    
+    embed.add_field(
+        name="🎮 Server",
+        value="**DiplomaticaMC**\n57 players online",
+        inline=True
+    )
+    
+    embed.add_field(
+        name="🔗 Links",
+        value="[Website](https://colombiadmc.site) | [Discord](https://discord.gg/YUyHgnpXwj) | [Wiki](https://wiki.diplomaticamc.com/wiki/Colombia)",
+        inline=False
+    )
+    
+    embed.set_thumbnail(url="https://colombiadmc.site/assets/escudo.png")
+    embed.set_footer(text="🇨🇴 Plus Ultra, further beyond")
+    
+    await interaction.followup.send(embed=embed)
+
+
+@bot.tree.command(name="player", description="Search for a player in the kingdom")
+@app_commands.describe(name="Minecraft username to search for")
+async def slash_player(interaction: discord.Interaction, name: str):
+    """Search for a specific player."""
+    await interaction.response.defer()
+    
+    # Sample player data - in production, this would fetch from your website API
+    players = {
+        "9_88": {"role": "King of Colombia", "town": "Maicao"},
+        "OliveTree316": {"role": "Prime Minister", "town": "Iza"},
+        "Novum_Vetus": {"role": "Min. of Foreign & Internal Affairs", "town": "Santa Maria"},
+        "Crowlia": {"role": "Min. of Defense", "town": "Aldama"},
+        "qulipzz": {"role": "Min. of Justice and Law", "town": "Santa Maria"},
+        "pato541": {"role": "Min. of Culture", "town": "Maicao"},
+        "Zaity1": {"role": "Citizen", "town": "Tegucigalpa"},
+    }
+    
+    # Case-insensitive search
+    player_data = None
+    for player_name, data in players.items():
+        if player_name.lower() == name.lower():
+            player_data = data
+            name = player_name
+            break
+    
+    if not player_data:
+        embed = discord.Embed(
+            title="❌ Player Not Found",
+            description=f"Could not find **{name}** in the kingdom directory.\n\nVisit [colombiadmc.site](https://colombiadmc.site/#citizens) to see all citizens!",
+            color=discord.Color(0xCE1126),
+            timestamp=datetime.utcnow(),
+        )
+        embed.set_footer(text="🇨🇴 Reino de Colombia · DiplomaticaMC")
+        await interaction.followup.send(embed=embed)
+        return
+    
+    embed = discord.Embed(
+        title=f"🎮 {name}",
+        description=f"**Role:** {player_data['role']}\n**Town:** {player_data['town']}",
+        color=discord.Color(0xFCD116),
+        timestamp=datetime.utcnow(),
+    )
+    
+    embed.set_thumbnail(url=f"https://mc-heads.net/avatar/{name}/128")
+    embed.set_footer(text="🇨🇴 Reino de Colombia · DiplomaticaMC")
+    
+    await interaction.followup.send(embed=embed)
 
 
 @bot.command(name="fact", aliases=["dato", "sabias"])
@@ -519,6 +754,13 @@ async def on_ready():
     logger.info(f"🇨🇴 {bot.user.name} is online!")
     logger.info(f"   Cycle #{cycle_count}")
     logger.info(f"   Will stay online for ~2 minutes (commands work!)")
+
+    # Sync slash commands
+    try:
+        synced = await bot.tree.sync()
+        logger.info(f"✅ Synced {len(synced)} slash commands")
+    except Exception as e:
+        logger.error(f"❌ Failed to sync slash commands: {e}")
 
     await bot.change_presence(
         activity=discord.Activity(
