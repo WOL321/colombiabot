@@ -238,7 +238,172 @@ async def help_cmd(ctx):
     embed.add_field(name="`!ping`", value="Check bot status", inline=False)
     embed.add_field(name="`!stats`", value="View statistics", inline=False)
     embed.add_field(name="`!holidays`", value="See Colombian holidays", inline=False)
+    embed.add_field(name="`!fact`", value="Random Colombian fact", inline=False)
+    embed.add_field(name="`!quote`", value="Inspirational Colombian quote", inline=False)
+    embed.add_field(name="`!flag`", value="Show the Colombian flag", inline=False)
+    embed.add_field(name="`!color`", value="Random flag color with meaning", inline=False)
+    embed.add_field(name="`!emoji`", value="Random Colombian emoji", inline=False)
+    embed.add_field(name="`!message`", value="Random pride message", inline=False)
     embed.add_field(name="`!help`", value="Show this message", inline=False)
+    embed.set_footer(text="🇨🇴 República de Colombia")
+    await ctx.send(embed=embed)
+
+
+@bot.command(name="fact", aliases=["dato", "sabias"])
+async def fact(ctx):
+    """Share a random Colombian fact."""
+    facts = [
+        ("🦜", "Colombia has more bird species than any other country — over 1,900!"),
+        ("🌺", "Colombia produces 70% of the world's emeralds."),
+        ("☕", "Colombian coffee is considered the best in the world."),
+        ("🏔️", "Colombia is the only South American country with coastlines on both the Pacific and Caribbean."),
+        ("🌳", "Colombia contains 10% of all species on Earth."),
+        ("🎨", "Fernando Botero's art is recognized worldwide for its unique style."),
+        ("🎵", "Colombia has 1,020 traditional rhythms and musical styles."),
+        ("🌹", "Colombia is the second-largest flower exporter in the world."),
+        ("🏛️", "Bogotá's Gold Museum houses the world's largest collection of pre-Columbian gold."),
+        ("🌊", "Colombia has the most freshwater rivers in South America."),
+        ("🦋", "Colombia has over 3,274 butterfly species — more than any other country."),
+        ("🎭", "The Barranquilla Carnival is the second-largest in the world."),
+        ("📚", "Gabriel García Márquez won the Nobel Prize in Literature in 1982."),
+        ("🏆", "Colombia has won 37 Olympic medals throughout history."),
+        ("🌿", "The Amazon rainforest covers 48% of Colombia's territory."),
+    ]
+    
+    emoji, fact_text = random.choice(facts)
+    
+    embed = discord.Embed(
+        title=f"{emoji} Did You Know?",
+        description=fact_text,
+        color=random.choice(EMBED_COLORS),
+        timestamp=datetime.utcnow(),
+    )
+    embed.set_footer(text="🇨🇴 Fun Colombian Facts")
+    await ctx.send(embed=embed)
+
+
+@bot.command(name="quote", aliases=["frase", "inspiracion"])
+async def quote(ctx):
+    """Share an inspirational Colombian quote."""
+    quotes = [
+        ("Gabriel García Márquez", "Life is not what one lived, but what one remembers."),
+        ("Gabriel García Márquez", "Human beings are not born once and for all on the day their mothers give birth to them."),
+        ("Shakira", "I'm not a feminist, but I believe in women's power."),
+        ("Fernando Botero", "Art is not about copying reality, but creating a new one."),
+        ("Colombian Proverb", "El que mucho abarca, poco aprieta. (He who grasps at too much, holds little.)"),
+        ("Colombian Proverb", "No hay mal que por bien no venga. (There's no bad from which good doesn't come.)"),
+        ("Colombian Proverb", "Más vale pájaro en mano que ciento volando. (A bird in hand is worth two in the bush.)"),
+        ("Juanes", "Music is the universal language that connects us all."),
+        ("Carlos Vives", "Our roots make us who we are."),
+        ("Nairo Quintana", "Every mountain is an opportunity."),
+    ]
+    
+    author, quote_text = random.choice(quotes)
+    
+    embed = discord.Embed(
+        title="💭 Colombian Wisdom",
+        description=f'"{quote_text}"',
+        color=random.choice(EMBED_COLORS),
+        timestamp=datetime.utcnow(),
+    )
+    embed.set_footer(text=f"— {author} 🇨🇴")
+    await ctx.send(embed=embed)
+
+
+@bot.command(name="flag", aliases=["bandera"])
+async def flag(ctx):
+    """Show the Colombian flag with pride."""
+    embed = discord.Embed(
+        title="🇨🇴 The Colombian Flag",
+        description=(
+            "The national flag of Colombia is a symbol of our sovereignty, "
+            "honor, and bravery.\n\n"
+            "**Yellow** (top half): Sovereignty, justice, and the rich soil\n"
+            "**Blue** (quarter): The sky, the seas, loyalty, and perseverance\n"
+            "**Red** (quarter): The blood of heroes who fought for freedom"
+        ),
+        color=discord.Color(0xFCD116),
+        timestamp=datetime.utcnow(),
+    )
+    embed.set_thumbnail(url="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Colombia.svg/1200px-Flag_of_Colombia.svg.png")
+    embed.set_footer(text="🇨🇴 Ley 12 de 1967")
+    await ctx.send(embed=embed)
+
+
+@bot.command(name="color", aliases=["colour", "color"])
+async def color_cmd(ctx):
+    """Show a random flag color with its meaning."""
+    colors = [
+        {
+            "name": "Yellow",
+            "hex": "FCD116",
+            "meaning": "Sovereignty, justice, and the rich Colombian soil",
+            "emoji": "💛",
+        },
+        {
+            "name": "Blue",
+            "hex": "003893",
+            "meaning": "The sky, the seas, loyalty, and perseverance",
+            "emoji": "💙",
+        },
+        {
+            "name": "Red",
+            "hex": "CE1126",
+            "meaning": "The blood of heroes who fought for our freedom",
+            "emoji": "❤️",
+        },
+    ]
+    
+    color = random.choice(colors)
+    
+    embed = discord.Embed(
+        title=f"{color['emoji']} {color['name']}",
+        description=color['meaning'],
+        color=discord.Color(int(color['hex'], 16)),
+        timestamp=datetime.utcnow(),
+    )
+    embed.add_field(name="Hex Code", value=f"`#{color['hex']}`", inline=True)
+    embed.set_footer(text="🇨🇴 Official Colombian Flag Colors")
+    await ctx.send(embed=embed)
+
+
+@bot.command(name="emoji", aliases=["emojis"])
+async def emoji_cmd(ctx):
+    """Show random Colombian-themed emojis."""
+    emoji_sets = [
+        ["🇨🇴", "💛", "💙", "❤️"],
+        ["☕", "🌱", "🏔️", "🌺"],
+        ["🦜", "🦋", "🐆", "🌳"],
+        ["💃", "🕺", "🎵", "🎺"],
+        ["🏔️", "🌊", "🌅", "⛰️"],
+        ["🎉", "✨", "🌟", "💫"],
+        ["🌹", "🌸", "🌻", "🌷"],
+        ["📚", "🎨", "🎭", "🎬"],
+    ]
+    
+    emojis = random.choice(emoji_sets)
+    
+    embed = discord.Embed(
+        title="🇨🇴 Colombian Emojis",
+        description=" ".join(emojis),
+        color=random.choice(EMBED_COLORS),
+        timestamp=datetime.utcnow(),
+    )
+    embed.set_footer(text="🇨🇴 Express your Colombian pride!")
+    await ctx.send(embed=embed)
+
+
+@bot.command(name="message", aliases=["msg", "random"])
+async def message_cmd(ctx):
+    """Show a random Colombian pride message."""
+    base_message = random.choice(BASE_MESSAGES)
+    message = get_random_emoji_message(base_message)
+    
+    embed = discord.Embed(
+        description=message,
+        color=random.choice(EMBED_COLORS),
+        timestamp=datetime.utcnow(),
+    )
     embed.set_footer(text="🇨🇴 República de Colombia")
     await ctx.send(embed=embed)
 
