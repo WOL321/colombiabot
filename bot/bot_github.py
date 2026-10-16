@@ -161,6 +161,8 @@ async def ping(ctx):
 async def on_ready():
     """Called when bot connects to Discord."""
     logger.info(f"🇨🇴 {bot.user.name} is online!")
+    logger.info(f"📝 Main channel: {CHANNEL_ID}")
+    logger.info(f"📊 Poll channel: {POLL_CHANNEL_ID if POLL_CHANNEL_ID else 'NOT SET'}")
 
     await bot.change_presence(
         activity=discord.Activity(
