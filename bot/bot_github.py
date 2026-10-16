@@ -29,6 +29,7 @@ from config import (
     HOLIDAY_FOOTERS,
     get_todays_holiday,
 )
+from kingdom_data import get_kingdom_data, get_towns_with_residents, get_total_residents, get_town_count
 
 # Logging
 logging.basicConfig(
@@ -247,11 +248,14 @@ async def slash_citizens(interaction: discord.Interaction):
     """Show all citizens from the kingdom."""
     await interaction.response.defer()
     
-    # This data would normally be fetched from your website API
-    # For now, using sample data structure
+    # Fetch live data
+    data = await get_kingdom_data()
+    total_residents = data.get("total_residents", 0)
+    total_towns = data.get("total_towns", 0)
+    
     embed = discord.Embed(
         title="👥 Citizens of the Reino de Colombia",
-        description="**577 citizens** across **34 towns**\n\nVisit [colombiadmc.site](https://colombiadmc.site) for the full directory!",
+        description=f"**{total_residents} residents** across **{total_towns} active towns**\n\nVisit [colombiadmc.site](https://colombiadmc.site) for the full directory!",
         color=discord.Color(0xFCD116),
         timestamp=datetime.utcnow(),
     )
@@ -269,13 +273,13 @@ async def slash_citizens(interaction: discord.Interaction):
     )
     
     embed.add_field(
-        name="📊 Statistics",
-        value="• Total Citizens: **577**\n• Total Towns: **34**\n• Capital: **Maicao**",
+        name="📊 Live Statistics",
+        value=f"• Active Residents: **{total_residents}**\n• Active Towns: **{total_towns}**\n• Capital: **Maicao**",
         inline=False
     )
     
     embed.set_thumbnail(url="https://colombiadmc.site/assets/escudo.png")
-    embed.set_footer(text="🇨🇴 Reino de Colombia · DiplomaticaMC")
+    embed.set_footer(text="🇨🇴 Reino de Colombia · DiplomaticaMC · Live data")
     
     await interaction.followup.send(embed=embed)
 
@@ -285,44 +289,48 @@ async def slash_towns(interaction: discord.Interaction):
     """Show all towns from the kingdom."""
     await interaction.response.defer()
     
+    # Fetch live data
+    towns = await get_towns_with_residents()
+    total_towns = len(towns)
+    
     embed = discord.Embed(
         title="🏘️ Towns of the Reino de Colombia",
-        description="**34 imperial towns** across the empire\n\nVisit [colombiadmc.site](https://colombiadmc.site/#citizens) for the full list!",
+        description=f"**{total_towns} active towns** with residents\n\nVisit [colombiadmc.site](https://colombiadmc.site/#citizens) for the full list!",
         color=discord.Color(0x003893),
         timestamp=datetime.utcnow(),
     )
     
-    # Sample towns
-    towns = [
-        ("Maicao", "12 residents", "🏛️ Capital"),
-        ("Tegucigalpa", "6 residents", "🌎 Central America"),
-        ("Santa Maria", "4 residents", "🏔️ Andes Region"),
-        ("George Town", "3 residents", "🏝️ Caribbean"),
-        ("Guatemala", "3 residents", "🌎 Central America"),
-        ("Medellin Antioquia", "2 residents", "🏔️ Colombian Region"),
-        ("Iza", "2 residents", "🏔️ Colombian Region"),
-        ("Goiania", "2 residents", "🌿 South America"),
-        ("El Estrella", "2 residents", "🏔️ Colombian Region"),
-        ("Canollia", "2 residents", "🌿 South America"),
-        ("Paramaribo", "2 residents", "🌿 South America"),
-    ]
-    
-    town_list = "\n".join([f"• **{name}** - {residents} {tag}" for name, residents, tag in towns])
-    
-    embed.add_field(
-        name="🏘️ Major Towns",
-        value=town_list,
-        inline=False
-    )
-    
-    embed.add_field(
-        name="📊 More Towns",
-        value="Aldama, Bismuna Tara, Cabada Vera, Cali, Caracas, Cordoba, Dominican Republic, El Salvador, Esteli, Golopigi, Guatape, Intuto, Jardin, Managua, Mexico City, New Bahamas, Panama, Puerto Lempira, Quito, Santa Ana, Santa Marta, Trinidad, Zircon",
-        inline=False
-    )
+    # Show top towns (up to 10)
+    if towns:
+        top_towns = towns[:10]
+        town_list = "\n".join([
+            f"• **{town['name']}** - {town['residents']} resident{'s' if town['residents'] != 1 else ''}"
+            for town in top_towns
+        ])
+        
+        embed.add_field(
+            name="🏘️ Towns with Residents",
+            value=town_list,
+            inline=False
+        )
+        
+        # Show remaining towns if any
+        if len(towns) > 10:
+            remaining = [t["name"] for t in towns[10:]]
+            embed.add_field(
+                name=f"📊 {len(remaining)} More Towns",
+                value=", ".join(remaining),
+                inline=False
+            )
+    else:
+        embed.add_field(
+            name="🏘️ Towns",
+            value="No towns with residents found. Check the [website](https://colombiadmc.site) for updates!",
+            inline=False
+        )
     
     embed.set_thumbnail(url="https://colombiadmc.site/assets/escudo.png")
-    embed.set_footer(text="🇨🇴 Reino de Colombia · DiplomaticaMC")
+    embed.set_footer(text="🇨🇴 Reino de Colombia · DiplomaticaMC · Live data")
     
     await interaction.followup.send(embed=embed)
 
@@ -380,6 +388,11 @@ async def slash_kingdom(interaction: discord.Interaction):
     """Show kingdom statistics."""
     await interaction.response.defer()
     
+    # Fetch live data
+    data = await get_kingdom_data()
+    total_residents = data.get("total_residents", 0)
+    total_towns = data.get("total_towns", 0)
+    
     embed = discord.Embed(
         title="📊 Kingdom Statistics",
         description="Reino de Colombia · DiplomaticaMC",
@@ -389,13 +402,13 @@ async def slash_kingdom(interaction: discord.Interaction):
     
     embed.add_field(
         name="👥 Population",
-        value="**577** citizens",
+        value=f"**{total_residents}** residents",
         inline=True
     )
     
     embed.add_field(
         name="🏘️ Towns",
-        value="**34** imperial towns",
+        value=f"**{total_towns}** active towns",
         inline=True
     )
     
@@ -418,19 +431,13 @@ async def slash_kingdom(interaction: discord.Interaction):
     )
     
     embed.add_field(
-        name="🎮 Server",
-        value="**DiplomaticaMC**\n57 players online",
-        inline=True
-    )
-    
-    embed.add_field(
         name="🔗 Links",
         value="[Website](https://colombiadmc.site) | [Discord](https://discord.gg/YUyHgnpXwj) | [Wiki](https://wiki.diplomaticamc.com/wiki/Colombia)",
         inline=False
     )
     
     embed.set_thumbnail(url="https://colombiadmc.site/assets/escudo.png")
-    embed.set_footer(text="🇨🇴 Plus Ultra, further beyond")
+    embed.set_footer(text="🇨🇴 Plus Ultra, further beyond · Live data")
     
     await interaction.followup.send(embed=embed)
 
