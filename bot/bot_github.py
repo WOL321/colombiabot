@@ -1,6 +1,7 @@
 """
-🇨🇴 Colombia Pride Bot - GitHub Actions Version (Extended)
-Stays online for ~15 minutes to respond to commands and send messages.
+🇨🇴 Colombia Pride Bot - GitHub Actions Version (Smart Mode)
+Stays online for 2-3 minutes to respond to commands, then exits.
+Uses ~1,500 minutes/month (under GitHub's 2,000 limit)
 """
 
 import os
@@ -23,9 +24,6 @@ from config import (
     MIN_REACTIONS,
     MAX_REACTIONS,
     EMBED_COLORS,
-    CYCLE_DURATION_HOURS,
-    MIN_GAP_MINUTES,
-    MAX_GAP_MINUTES,
     FOOTERS,
     HOLIDAY_FOOTERS,
     get_todays_holiday,
@@ -254,7 +252,7 @@ async def on_ready():
     
     logger.info(f"🇨🇴 {bot.user.name} is online!")
     logger.info(f"   Cycle #{cycle_count}")
-    logger.info(f"   Will stay online for ~15 minutes")
+    logger.info(f"   Will stay online for ~2 minutes (commands work!)")
 
     await bot.change_presence(
         activity=discord.Activity(
@@ -264,19 +262,16 @@ async def on_ready():
         status=discord.Status.online,
     )
 
-    # Random decision: should we send a message this session?
-    should_send = random.random() < 0.60
-
-    if should_send:
-        # Wait a bit before sending (natural feel)
-        await asyncio.sleep(random.uniform(5, 30))
+    # Send a message immediately (80% chance)
+    if random.random() < 0.80:
+        await asyncio.sleep(random.uniform(3, 10))
         await send_message()
     else:
-        logger.info("💤 Skipping message this session (natural timing)")
+        logger.info("💤 Skipping message this session")
 
-    # Stay online for 15 minutes to respond to commands
-    logger.info("👂 Listening for commands...")
-    await asyncio.sleep(900)  # 15 minutes = 900 seconds
+    # Stay online for 2 minutes to respond to commands
+    logger.info("👂 Listening for commands for 2 minutes...")
+    await asyncio.sleep(120)  # 2 minutes = 120 seconds
 
     # Time to shut down
     logger.info("👋 Session ending, shutting down...")
@@ -295,8 +290,9 @@ async def on_command_error(ctx, error):
 
 def main():
     """Main entry point."""
-    logger.info("🚀 Starting Colombia Pride Bot (GitHub Actions - Extended Mode)")
-    logger.info("   Bot will stay online for ~15 minutes")
+    logger.info("🚀 Starting Colombia Pride Bot (GitHub Actions - Smart Mode)")
+    logger.info("   Bot will stay online for ~2 minutes")
+    logger.info("   Commands work during this window!")
     logger.info("   Commands: !ping, !stats, !holidays, !help")
 
     try:

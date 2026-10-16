@@ -2,8 +2,9 @@ name: Colombia Pride Bot
 
 on:
   schedule:
-    # Runs every 20 minutes
-    - cron: '*/20 * * * *'
+    # Runs every 50 minutes (bot stays online for 2 minutes)
+    # This keeps us under GitHub's 2,000 minutes/month limit
+    - cron: '*/50 * * * *'
   workflow_dispatch: # Allows manual trigger
 
 jobs:
@@ -24,9 +25,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r bot/requirements.txt
     
-    - name: Run bot (stays online for ~15 minutes)
+    - name: Run bot (stays online for ~2 minutes, commands work!)
       env:
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
       run: python bot/bot_github.py
-      timeout-minutes: 18
+      timeout-minutes: 5
